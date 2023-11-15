@@ -8,12 +8,14 @@ function gerichtForm() {
     const [loading,setLoading] = useState(true)
     const [gerichte, setGerichte] = useState();
 
+
     async function fetchData(){
         const res = await fetch("/gerichte/all");
         const data = await res.json();
         setGerichte(data)
         setLoading(false)
     }
+
 
     const addGericht = async (e) =>{
 
@@ -31,6 +33,12 @@ function gerichtForm() {
         );
     
       }
+    
+      
+    const clearFields = () => {
+        document.getElementById("gerichtField").value = "";
+        document.getElementById("kalorienField").value = "";
+    }
 
     useEffect(() =>{
         fetchData();
@@ -39,16 +47,17 @@ function gerichtForm() {
     if(loading) return <div>Is Loading...</div>
     return (
     <>
-         <input
+         <input id="gerichtField"
         onChange={(e) => setGericht(e.target.value)}
-        type="text" placeholder="gericht">
+        type="text" placeholder="title">
     </input>
-    <input
+    
+    <input id="kalorienField"
         onChange={(e) => setCalories(e.target.value)}
         type="text" placeholder="calories">
     </input>
     <button
-        onClick={() => addGericht()}
+        onClick={() => {addGericht(), clearFields()}}
         className="rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >
        Add

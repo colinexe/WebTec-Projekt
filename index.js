@@ -10,12 +10,16 @@ const mongoose = require('mongoose')
 
 const staticPath = path.join(__dirname, 'build/client')
 
-const FoodSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
     Gericht: String,
-    calories: String,
+    //producer: String,
+    calories: Number,
+    /*fat: Number,
+    carbohydrates: Number,
+    protein: Number*/
 });
 
-const UserHealthData = mongoose.model('Gerichte', FoodSchema);
+const ProductData = mongoose.model('Gerichte', ProductSchema);
 
 // connecto to mongoDB
 mongoose.connect("mongodb://localhost:27017/Food");
@@ -29,17 +33,22 @@ server.use(bodyParser.urlencoded({ extended: true }))
 
 server.get("/test",handleGet)
 
+
 server.post("/gerichte/add", (req, res) =>{
     const { Gericht, calories } = req.body;
-    UserHealthData.create({
-        Gericht:Gericht,
+    ProductData.create({
+        Gericht: Gericht,
+        //producer: producer,
         calories: calories
+        /*fat: fat,
+        carbohydrates: carbohydrates,
+        protein: protein*/
     })
     res.send("ok")
 })
 
 server.get("/gerichte/all", async (req, res)=>{
-    const gerichte = await UserHealthData.find();
+    const gerichte = await ProductData.find();
     console.log(gerichte)
      res.send(gerichte)
 })

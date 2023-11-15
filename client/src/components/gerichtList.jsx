@@ -28,10 +28,14 @@ function gerichtList() {
               <div className="flex flex-row">
 
              
-              <div>{el.Gericht}</div>
-            <div>
-              {el.calories}
-            </div>
+              <div> {el.Gericht}</div>
+              {/*<div> {el.producer}</div>*/}
+              <div> {el.calories}</div>
+              {/*<div> {el.fat}</div>
+              <div> {el.carbohydrates}</div>
+              <div> {el.protein}</div>*/}
+             
+            
             </div>
             </div>)
            
