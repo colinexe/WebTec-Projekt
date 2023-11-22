@@ -26,6 +26,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      "/exercises": {
+      target: "http://localhost:10000",
+      changeOrigin: true,
+      secure: false,
+      },
     },
   },
 })
