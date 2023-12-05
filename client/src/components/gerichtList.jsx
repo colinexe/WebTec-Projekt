@@ -29,6 +29,7 @@ function gerichtList() {
 
              
               <div> {el.Gericht}</div>
+              &nbsp;&nbsp;&nbsp;&nbsp;
               {/*<div> {el.producer}</div>*/}
               <div> {el.calories}</div>
               {/*<div> {el.fat}</div>

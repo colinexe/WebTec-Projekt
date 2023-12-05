@@ -61,34 +61,49 @@ const SetSchema = new mongoose.Schema({
 
 const ExerciseSchema = new mongoose.Schema({
     exercise_name: String,
-    exercise_date: Date,
-    set_number: Number,
-    set_weight: Number,
-    set_repetition: Number
+    //muscle_group: String,
+    set: [SetSchema]
 })
 
-const SetData = mongoose.model('Sets', SetSchema);
-const ExerciseData = mongoose.model('Exercises', ExerciseSchema);
+const WorkoutSchema = new mongoose.Schema({
+    //user: String,
+    workout_type: String,
+    workout_date: Date,
+    //duration: Number,
+    exercise: [ExerciseSchema]
+})
 
+const WorkoutData = mongoose.model('Workouts', WorkoutSchema);
 
-server.post("/exercises/add", (req, res) =>{
-    const {exercise_name, exercise_date, set_number, set_weight, set_repetition} = req.body;
-    ExerciseData.create({
-        exercise_name: exercise_name,
-        exercise_date: exercise_date,
-
-            set_number: set_number,
-            set_weight: set_weight,
-            set_repetition: set_repetition
-    
+//initial erstellen
+server.post("/workouts/add", (req, res) =>{
+    //console.log(req.body);
+    const {workout_type, workout_date, exercise} = req.body;
+    const {exercise_name, set} = exercise[0];
+    //console.log(exercise[0]);
+    const {set_number, set_weight, set_repetition} = set[0];
+    //console.log(set[0]);
+    WorkoutData.create({
+        workout_type: workout_type,
+        workout_date: workout_date,
+        duration: "5",
+        exercise: [{
+            exercise_name: exercise_name,
+            set: [{
+                set_number: set_number,
+                set_weight: set_weight,
+                set_repetition: set_repetition
+            }]
+        }]
     })
     res.send("ok")
 })
 
-server.get("/exercises/all", async (req, res)=>{
-    const exercises = await ExerciseData.find();
-    console.log(exercises)
-    res.send(exercises)
+
+server.get("/workouts/all", async (req, res)=>{
+    const workouts = await WorkoutData.find();
+    console.log(workouts)
+    res.send(workouts)
 })
 
 // Server Functions
