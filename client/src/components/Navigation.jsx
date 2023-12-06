@@ -17,8 +17,8 @@ function Navigation() {
         var page = path.split("/").pop();
         gerichtFormActive(page);
     }
-    const navigateExerciseForm = () => {
-        navigate("./exerciseForm");
+    const navigateWorkoutList = () => {
+        navigate("./workoutList");
         var path = window.location.pathname;
         var page = path.split("/").pop();
         exerciseFormActive(page);
@@ -30,20 +30,20 @@ function Navigation() {
         if (page = "/"){
             document.getElementById("GerichtList").className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";       
             document.getElementById("GerichtForm").className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
-            document.getElementById("ExerciseForm").className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
+            document.getElementById("WorkoutList").className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
         }
     }
     const gerichtFormActive = (page) => {
         if (page = "gerichtForm"){
             document.getElementById("GerichtForm").className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";       
             document.getElementById("GerichtList").className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
-            document.getElementById("ExerciseForm").className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
+            document.getElementById("WorkoutList").className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
         }
     }
     const exerciseFormActive = (page) => {
 
-        if (page = "exerciseForm"){
-            document.getElementById("ExerciseForm").className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";       
+        if (page = "workoutList"){
+            document.getElementById("WorkoutList").className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";       
             document.getElementById("GerichtList").className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
             document.getElementById("GerichtForm").className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded";
         }
@@ -64,7 +64,7 @@ function Navigation() {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button id="GerichtForm" onClick={navigateGerichtForm} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Essens Form</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button id="ExerciseForm" onClick={navigateExerciseForm} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Exercise Form</button>
+            <button id="WorkoutList" onClick={navigateWorkoutList} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Exercise Form</button>
         </div>
     </div>
 
