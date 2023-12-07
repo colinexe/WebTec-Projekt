@@ -1,25 +1,30 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import {useLocation} from 'react-router-dom';
 import "../styles.css";
 import React from 'react';
 
-function workoutDetail() {
+function workoutDetail(elem) {
     <link rel="stylesheet" href="../styles.css"></link>
     const [loading,setLoading] = useState(true)
     const [workouts, setWorkouts] = useState()
     const [myWorkout, setMyWorkout] = useState()
 
+    const location = useLocation();
+    const myId= location.state._id
+
     const [modal, setModal] = useState(false);
 
-    const toggleModal = () => {
-        setModal(!modal);
-    };
-    if(modal){
-        document.body.classList.add('active-modal')
-    }else{
-        document.body.classList.remove('active-modal')
-    }
-    
+
+
+    const toggleModal = (exercise) => {
+        let myExercise = document.getElementById(exercise);
+    if (myExercise.classList.contains('hidden')){
+        myExercise.classList.remove('hidden');
+    } else {
+        myExercise.classList.add('hidden') ;
+    }}
+
     {/*
     const buildModalBody = (id) => {
         document.getElementById(id).innerHTML =  `
@@ -47,7 +52,7 @@ function workoutDetail() {
         const data = await res.json();
         setWorkouts(data)
         setLoading(false)
-        const myworkout = findId(data, "6565d9dc09697634fce7a6e3")
+        const myworkout = findId(data, myId)
         setMyWorkout(await myworkout)
     }
 
@@ -84,31 +89,42 @@ function workoutDetail() {
 
                     <span className="text-lg">exercise: {el_of_exercise.exercise_name}&nbsp;&nbsp;</span>
                     <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        onClick={toggleModal}>
+                        onClick={() => toggleModal(el_of_exercise.exercise_name)}>
                         Edit {el_of_exercise.exercise_name}
                     </button>
                     
                     <div>
                     
-                    {modal && ( 
-                        <div  id={el_of_exercise.exercise_name} className="modal">
-                        <div onClick={toggleModal} className="overlay"></div>
-                        <div className="modal-content">
-                        <h2>Edit Exercise</h2>
-                        <input type="text" placeholder={el_of_exercise.exercise_name}></input>
+                     {/* MODAL */}
+                        <div  id={el_of_exercise.exercise_name} className="hidden">
+                            <div onClick={() => toggleModal(el_of_exercise.exercise_name)} className="overlay"></div>
+                            <div className="modal-content">
+                                <h2>Edit Exercise</h2>
+                            
+                            <div>Name: <input type="text" placeholder={el_of_exercise.exercise_name}></input></div> 
                             
 
                             {el_of_exercise.set.map((el_of_set, index_of_set) => 
                             <div key={index_of_set}>
-                            <p>{el_of_set.set_weight}</p>
+                            <div>
+                                <span className="inline-block w-12">Set {el_of_set.set_number}:&nbsp;</span>
+                                 
+                                <input size="3" type="text" placeholder={el_of_set.set_repetition}></input>
+                                &nbsp;X&nbsp;
+                                <input size="3" type="text" placeholder={el_of_set.set_weight}></input> 
+                                &nbsp;kg
+                            </div>
                             </div>
                             )} 
 
 
-          <button className="close-modal" onClick={toggleModal}> X </button>
-        </div>
+                        <button className="close-modal" onClick={() => toggleModal(el_of_exercise.exercise_name)}> X </button>
+                        </div>
                       </div>
-                    )}</div>
+
+
+
+                    </div>
                      
                     <div>
                     {el_of_exercise.set.map((el_of_set, index_of_set) =>{

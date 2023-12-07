@@ -10,9 +10,9 @@ function workoutList() {
     const [workouts, setWorkouts] = useState()
 
     const navigate = useNavigate();
-    const navigateWorkoutDetail =  () => {
-        navigate("./workoutDetail");
-        var path = window.location.pathname;
+    const navigateWorkoutDetail =  (myWorkout) => {
+        navigate("./workoutDetail", {state: {_id: myWorkout._id}});
+        //var path = window.location.pathname;
     }
 
     async function fetchData(){
@@ -35,7 +35,7 @@ function workoutList() {
             return (
                 
             <button  key={index} className="bg-gray-200 bg-zinc-300 rounded-lg p-2 m-5 mx-auto w-4/12 block text-left"
-            onClick={navigateWorkoutDetail}
+            onClick={() => navigateWorkoutDetail(el_of_workout)}
             >
             
             <p className="text-xl font-bold">
@@ -44,7 +44,7 @@ function workoutList() {
             {String(el_of_workout.workout_date).substring(0,10)}
             </p>
             <p>Exercises: {el_of_workout.exercise.length}</p>
-            <p>Dauer:</p>
+            <p>Dauer: {el_of_workout.duration} min</p>
 
 
             <div>

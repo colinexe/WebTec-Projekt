@@ -64,7 +64,7 @@ function Navigation() {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button id="GerichtForm" onClick={navigateGerichtForm} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Essens Form</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button id="WorkoutList" onClick={navigateWorkoutList} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Exercise Form</button>
+            <button id="WorkoutList" onClick={navigateWorkoutList} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Workouts</button>
         </div>
     </div>
 

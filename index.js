@@ -69,7 +69,7 @@ const WorkoutSchema = new mongoose.Schema({
     //user: String,
     workout_type: String,
     workout_date: Date,
-    //duration: Number,
+    duration: Number,
     exercise: [ExerciseSchema]
 })
 
@@ -78,7 +78,7 @@ const WorkoutData = mongoose.model('Workouts', WorkoutSchema);
 //initial erstellen
 server.post("/workouts/add", (req, res) =>{
     //console.log(req.body);
-    const {workout_type, workout_date, exercise} = req.body;
+    const {workout_type, workout_date, duration, exercise} = req.body;
     const {exercise_name, set} = exercise[0];
     //console.log(exercise[0]);
     const {set_number, set_weight, set_repetition} = set[0];
