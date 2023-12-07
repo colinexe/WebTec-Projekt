@@ -23,8 +23,9 @@ function workoutDetail(elem) {
         myExercise.classList.remove('hidden');
     } else {
         myExercise.classList.add('hidden') ;
-    }}
+    }};
 
+ 
     {/*
     const buildModalBody = (id) => {
         document.getElementById(id).innerHTML =  `
@@ -101,22 +102,26 @@ function workoutDetail(elem) {
                             <div className="modal-content">
                                 <h2>Edit Exercise</h2>
                             
-                            <div>Name: <input type="text" placeholder={el_of_exercise.exercise_name}></input></div> 
+                            <div>Name: <input type="text" defaultValue={el_of_exercise.exercise_name}></input></div> 
                             
-
-                            {el_of_exercise.set.map((el_of_set, index_of_set) => 
-                            <div key={index_of_set}>
                             <div>
-                                <span className="inline-block w-12">Set {el_of_set.set_number}:&nbsp;</span>
+                            {el_of_exercise.set.map((el_of_set, index_of_set) => 
+                            <div key={index_of_set} id={el_of_set._id}>
+                                
+                            
+                                <span className=" w-12">Set {el_of_set.set_number}:&nbsp;</span>
                                  
-                                <input size="3" type="text" placeholder={el_of_set.set_repetition}></input>
+                                <input size="3" type="text" defaultValue={el_of_set.set_repetition}></input>
                                 &nbsp;X&nbsp;
-                                <input size="3" type="text" placeholder={el_of_set.set_weight}></input> 
+                                <input size="3" type="text" defaultValue={el_of_set.set_weight}></input> 
                                 &nbsp;kg
-                            </div>
-                            </div>
-                            )} 
+                                
+                                
 
+                            </div>
+                            )}
+                            
+                            </div>
 
                         <button className="close-modal" onClick={() => toggleModal(el_of_exercise.exercise_name)}> X </button>
                         </div>
