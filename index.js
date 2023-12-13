@@ -31,7 +31,8 @@ server.use(cors())
 server.use(bodyParser.urlencoded({ extended: true }))
 
 
-
+/*hier werden die einzelnen Objekte in die Datenbank gepackt
+der erweiterte Teil definiert die Zusammensetzung des Objektes*/
 server.post("/gerichte/add", (req, res) =>{
     const { Gericht, calories } = req.body;
     ProductData.create({
@@ -45,6 +46,8 @@ server.post("/gerichte/add", (req, res) =>{
     res.send("ok")
 })
 
+/*hier werden Objekte auf der Datenbank abgefragt
+es werden hier alle Gerichte abgefragt*/
 server.get("/gerichte/all", async (req, res)=>{
     const gerichte = await ProductData.find();
     console.log(gerichte)
@@ -78,11 +81,14 @@ const WorkoutData = mongoose.model('Workouts', WorkoutSchema);
 //initial erstellen
 server.post("/workouts/add", (req, res) =>{
     //console.log(req.body);
+    /*hier werden die Variablen abgefragt, die genutzt werden*/
     const {workout_type, workout_date, duration, exercise} = req.body;
     const {exercise_name, set} = exercise[0];
     //console.log(exercise[0]);
     const {set_number, set_weight, set_repetition} = set[0];
     //console.log(set[0]);
+
+    /*hier drunter wird in die Datenbank geschrieben*/
     WorkoutData.create({
         workout_type: workout_type,
         workout_date: workout_date,

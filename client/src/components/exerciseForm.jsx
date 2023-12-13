@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-
+{/*hier werden die Variablen initial deklariert*/}
 function exerciseForm() {
     const [workout_type, setWorkoutType] = useState();
     const [exercise_name, setExerciseName] = useState();
@@ -68,6 +68,7 @@ function exerciseForm() {
     if(loading) return <div>Is Loading...</div>
     return (
     <>
+    {/* hier werden die einzelnen Variablen in ihrer Form definiert*/}
     <input id="workout_type"
         onChange={(e) => setWorkoutType(e.target.value)}
         type="text" placeholder="WorkoutType">
