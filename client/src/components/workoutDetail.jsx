@@ -25,29 +25,6 @@ function workoutDetail(elem) {
         myExercise.classList.add('hidden') ;
     }};
 
- 
-    {/*
-    const buildModalBody = (id) => {
-        document.getElementById(id).innerHTML =  `
-
-        <div onClick={toggleModal} className="overlay"></div>
-        <div className="modal-content">
-          <h2>Edit Exercise</h2>
-          <input type="text" placeholder={el_of_exercise.exercise_name}></input>
-            
-
-            {el_of_exercise.set.map((el_of_set, index_of_set) => 
-            <div key={index_of_set}>
-            <p>{el_of_set.set_weight}</p>
-            </div>
-            )} 
-
-
-          <button className="close-modal" onClick={toggleModal(el_of_exercise.exercise_name)}> X </button>
-        </div> `
-        ;
-    }*/}
-
     async function fetchData(){
         const res = await fetch("/workouts/all");
         const data = await res.json();
@@ -100,8 +77,9 @@ function workoutDetail(elem) {
                         <div  id={el_of_exercise.exercise_name} className="hidden">
                             <div onClick={() => toggleModal(el_of_exercise.exercise_name)} className="overlay"></div>
                             <div className="modal-content">
+                                <div className="text-lg font-semibold">
                                 <h2>Edit Exercise</h2>
-                            
+                                </div>
                             <div>Name: <input type="text" defaultValue={el_of_exercise.exercise_name}></input></div> 
                             
                             <div>
@@ -109,7 +87,7 @@ function workoutDetail(elem) {
                             <div key={index_of_set} id={el_of_set._id}>
                                 
                             
-                                <span className=" w-12">Set {el_of_set.set_number}:&nbsp;</span>
+                                <span className=" w-12">Set {index_of_set+1}:&nbsp;</span>
                                  
                                 <input size="3" type="text" defaultValue={el_of_set.set_repetition}></input>
                                 &nbsp;X&nbsp;
@@ -122,7 +100,15 @@ function workoutDetail(elem) {
                             )}
                             
                             </div>
-
+                            <button className="delete-set">
+                                Delete Set 
+                            </button>
+                            <button>
+                                Add Set 
+                            </button>
+                            <button className="save-changes">
+                                Save Changes
+                            </button>
                         <button className="close-modal" onClick={() => toggleModal(el_of_exercise.exercise_name)}> X </button>
                         </div>
                       </div>

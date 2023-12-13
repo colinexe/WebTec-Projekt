@@ -54,7 +54,6 @@ server.get("/gerichte/all", async (req, res)=>{
 
 //Exercise DB
 const SetSchema = new mongoose.Schema({
-    set_number: Number,
     set_weight: Number,
     set_repetition: Number
 })
@@ -81,7 +80,7 @@ server.post("/workouts/add", (req, res) =>{
     const {workout_type, workout_date, duration, exercise} = req.body;
     const {exercise_name, set} = exercise[0];
     //console.log(exercise[0]);
-    const {set_number, set_weight, set_repetition} = set[0];
+    const {set_weight, set_repetition} = set[0];
     //console.log(set[0]);
     WorkoutData.create({
         workout_type: workout_type,
@@ -90,13 +89,29 @@ server.post("/workouts/add", (req, res) =>{
         exercise: [{
             exercise_name: exercise_name,
             set: [{
-                set_number: set_number,
                 set_weight: set_weight,
                 set_repetition: set_repetition
             }]
         }]
     })
     res.send("ok")
+})
+
+server.post("/workouts/update", async (req, res) => {
+    //Require workout ID, exercise index, set index, setweight/setreps and value
+
+
+    const filter = {_id: "656ef1d43d969dcc580783e7"};
+    
+    //Edit with indexes
+    const exercise_index = 0
+    const set_index = 0
+    const testUpdate = String("exercise."+exercise_index+".set."+set_index+".set_weight")
+
+    //const update = {$set: {"exercise.0.set.0.set_weight": 200}}
+    const update = {$set: {[testUpdate]: 100}}
+    const doc = await WorkoutData.findOneAndUpdate(filter, update);
+    res.send(doc);
 })
 
 

@@ -22,12 +22,11 @@ function exerciseForm() {
 
     const addWorkouts = async (e) =>{
 
-        setWorkouts([...workouts, {workout_type: workout_type, exercise_name: exercise_name, workout_date: workout_date, set_number: set_number, set_weight: set_weight, set_repetition: set_repetition}])
+        setWorkouts([...workouts, {workout_type: workout_type, exercise_name: exercise_name, workout_date: workout_date, set_weight: set_weight, set_repetition: set_repetition}])
         console.log(JSON.stringify({
             workout_type: workout_type,
             exercise_name: exercise_name,
             workout_date: "test",
-            set_number: set_number,
             set_weight: set_weight,
             set_repetition: set_repetition
         }))
@@ -42,7 +41,6 @@ function exerciseForm() {
                 exercise:[{
                     exercise_name: exercise_name,
                 set:[{
-                    set_number: 1,
                     set_weight: set_weight,
                     set_repetition: set_repetition}]
                 }]

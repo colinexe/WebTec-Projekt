@@ -2,12 +2,26 @@ Ingredient/Product -
 {
     title:
     producer:
-    [comment]: <barcode:>
     calories:
     fat:
     carbohydrates:
     protein:
 }
+
+{
+    Name:
+    Ingredient: [
+        {
+            Name:
+            Hersteller:
+            Macros:
+        }
+    ]
+}
+
+
+
+
 
 WorkoutDocument
 {
