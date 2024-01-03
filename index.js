@@ -99,25 +99,42 @@ server.post("/workouts/add", (req, res) =>{
 
 server.post("/workouts/update", async (req, res) => {
     //Require workout ID, exercise index, set index, setweight/setreps and value
-
-
-    const filter = {_id: "656ef1d43d969dcc580783e7"};
+    console.log(req.body)
+    console.log("Hallo BE")
     
-    //Edit with indexes
-    const exercise_index = 0
-    const set_index = 0
-    const testUpdate = String("exercise."+exercise_index+".set."+set_index+".set_weight")
+    const {exercise_name, _id, exercise_index, my_set_weight, my_set_repetition} = req.body
+    const filter = {"exercise._id": _id}; // <- gives full Workout Document
+    var obj = {};
 
-    //const update = {$set: {"exercise.0.set.0.set_weight": 200}}
-    const update = {$set: {[testUpdate]: 100}}
-    const doc = await WorkoutData.findOneAndUpdate(filter, update);
-    res.send(doc);
+    console.log(my_set_repetition)
+    const testUpdate = String("exercise."+exercise_index+".exercise_name")
+    Object.assign(obj, {[testUpdate]: exercise_name})
+    
+
+    for (let i = 0, len = my_set_repetition.length; i < len; i++){
+        var update_reps = String("exercise."+exercise_index+".set."+i+".set_repetition")
+        Object.assign(obj, {[update_reps]: my_set_repetition[i]})
+        
+    }
+
+    for (let i = 0, len = my_set_weight.length; i < len; i++){
+        var update_reps = String("exercise."+exercise_index+".set."+i+".set_weight")
+        Object.assign(obj, {[update_reps]: my_set_weight[i]})
+        
+    }
+
+    console.log(obj)
+    const update = {$set: obj}
+
+
+    
+    await WorkoutData.findOneAndUpdate(filter, update);
 })
 
 
 server.get("/workouts/all", async (req, res)=>{
     const workouts = await WorkoutData.find();
-    console.log(workouts)
+    //console.log(workouts)
     res.send(workouts)
 })
 
