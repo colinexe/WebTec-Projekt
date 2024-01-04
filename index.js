@@ -113,14 +113,12 @@ server.post("/workouts/update", async (req, res) => {
 
     for (let i = 0, len = my_set_repetition.length; i < len; i++){
         var update_reps = String("exercise."+exercise_index+".set."+i+".set_repetition")
-        Object.assign(obj, {[update_reps]: my_set_repetition[i]})
-        
+        Object.assign(obj, {[update_reps]: my_set_repetition[i]})    
     }
 
     for (let i = 0, len = my_set_weight.length; i < len; i++){
         var update_reps = String("exercise."+exercise_index+".set."+i+".set_weight")
         Object.assign(obj, {[update_reps]: my_set_weight[i]})
-        
     }
 
     console.log(obj)
