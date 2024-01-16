@@ -71,7 +71,29 @@ function workoutDetail(elem) {
         }
     }
 
-    const changeName = async (e, ind) =>{
+    const deleteSet = async (myworkout, ind, index_of_set) => {
+        setExerciseName([...exercise_name, {myworkout:myworkout, exercise_index: ind, set_index: index_of_set}])
+        var setarr = myworkout.exercise[ind].set
+        //console.log(myworkout.exercise[ind].set[setarr.length-1]._id)
+        console.log(JSON.stringify({
+            exercise_index: ind,
+            workout_id: myworkout._id,
+            set_id: myworkout.exercise[ind].set[index_of_set]._id
+        }))
+       const res = await fetch("/workouts/deleteSet", {
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                exercise_index: ind,
+                workout_id: myworkout._id,
+                set_id: myworkout.exercise[ind].set[index_of_set]._id
+            }),
+        });
+    }
+
+    const changeExercise = async (e, ind) =>{
         setExerciseName([...exercise_name, {exercise_index: ind, exercise_name: exercise_name, _id: e._id, my_set_repetition: my_set_repetition,
             my_set_weight: my_set_weight}])
         
@@ -140,35 +162,52 @@ function workoutDetail(elem) {
                                 onChange={(e) => setExerciseName(e.target.value)}></input>
                                 </div> 
                             
-                            <div>
+                            <div id="set-input-lines"> 
                             {el_of_exercise.set.map((el_of_set, index_of_set) => 
                             <div key={index_of_set} id={el_of_set._id}>
                                 <span className=" w-12">Set {index_of_set+1}:&nbsp;</span>
                                 
-                                <input size="3" type="number" defaultValue={el_of_set.set_repetition}
+                                <input size="3" type="number" className="leading-snug" defaultValue={el_of_set.set_repetition}
                                 onChange={(e) => updateSetRepetition(e.target.value, index_of_set)}></input>
                                 &nbsp;X&nbsp;
-                                <input size="3" type="number" defaultValue={el_of_set.set_weight}
+                                <input size="3" type="number" className="leading-snug" defaultValue={el_of_set.set_weight}
                                 onChange={(e) => updateSetWeight(e.target.value, index_of_set)}></input> 
-                                &nbsp;kg
+                                &nbsp;kg &nbsp;
+
+                                <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                onClick={() => {deleteSet(myWorkout, ind, index_of_set)}}>
+                                Delete Set 
+                                </button>
+                              
                                 
                                 
 
                             </div>
                             )}
-                            
+                            <div>
+                                <span className=" w-12">Set {el_of_exercise.set.length+1}:&nbsp;</span>
+                                
+                                <input size="3" type="number" className="leading-snug"
+                                onChange={(e) => updateSetRepetition(e.target.value, index_of_set)}></input>
+                                &nbsp;X&nbsp;
+                                <input size="3" type="number" className="leading-snug"
+                                onChange={(e) => updateSetWeight(e.target.value, index_of_set)}></input> 
+                                &nbsp;kg&nbsp;
+                                <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                + Set 
+                                </button>
                             </div>
-                            <button className="delete-set"
-                            onClick={() => console.log(exercise_name, my_set_repetition, my_set_weight)}>
-                                Delete Set 
-                            </button>
-                            <button>
-                                Add Set 
-                            </button>
-                            <button id="saveButton" className="save-changes"
-                            onClick={() => {changeName(el_of_exercise, ind)}}>
+                            <div>
+                                <span className="w-12">&nbsp;</span>
+                            
+                            
+                            <button id="saveButton" className="save-changes btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            onClick={() => {changeExercise(el_of_exercise, ind), window.location.reload()}}>
                                 Save Changes
                             </button>
+                            </div>
+                            </div>
+                            
                         <button className="close-modal" onClick={() => {toggleModal(el_of_exercise.exercise_name), window.location.reload()}}> X </button>
                         </div>
                       </div>
@@ -181,7 +220,7 @@ function workoutDetail(elem) {
                     {el_of_exercise.set.map((el_of_set, index_of_set) =>{
                         return(
                             <div key={index_of_set} className="indent-4">
-                            <p>set {el_of_set.set_number}: {el_of_set.set_repetition} x {el_of_set.set_weight} kg</p>
+                            <p>Set {index_of_set+1}: {el_of_set.set_repetition} x {el_of_set.set_weight} kg</p>
 
                         </div>)
                     })}</div>

@@ -97,6 +97,23 @@ server.post("/workouts/add", (req, res) =>{
     res.send("ok")
 })
 
+server.post("/workouts/deleteSet", async (req, res) => {
+    //Require: workout_id, exercise index (ind), set_id (mit pop)
+    const {workout_id, exercise_index, set_id} = req.body
+    const filter = {"_id": workout_id}
+    console.log(req.body)
+    const testUpdate = String("exercise."+exercise_index+".set")
+
+    console.log(WorkoutData.find(filter))
+
+    WorkoutData.updateOne(filter, {$pull: {[testUpdate]: {"_id": set_id}}}).then((error, data) => {
+       res.send(data) 
+       //if error -> send error UND if data -> ...
+    })
+    console.log(WorkoutData.find(filter))
+    
+})
+
 server.post("/workouts/update", async (req, res) => {
     //Require workout ID, exercise index, set index, setweight/setreps and value
     console.log(req.body)
@@ -118,10 +135,11 @@ server.post("/workouts/update", async (req, res) => {
     }
 
     for (let i = 0, len = my_set_weight.length; i < len; i++){
-        var update_reps = String("exercise."+exercise_index+".set."+i+".set_weight")
-        Object.assign(obj, {[update_reps]: my_set_weight[i]})
+        var update_weight = String("exercise."+exercise_index+".set."+i+".set_weight")
+        Object.assign(obj, {[update_weight]: my_set_weight[i]})
         
     }
+
 
     console.log(obj)
     const update = {$set: obj}
