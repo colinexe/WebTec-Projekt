@@ -5,7 +5,6 @@ import './index.css'
 import GerichtList from "./components/gerichtList.jsx"
 import GerichtForm from "./components/gerichtForm.jsx"
 import Navigation from "./components/Navigation.jsx"
-import TrainingsPlan from "./components/trainingPlan.jsx"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

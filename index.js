@@ -10,9 +10,8 @@ mongoose.connect("mongodb://localhost:27017/Food");
 
 const staticPath = path.join(__dirname, 'build/client')
 
-//Ingredient DB
-const ProductSchema = new mongoose.Schema({
-    Gericht: String,
+const GerichtSchema = new mongoose.Schema({
+    name: String,
     //producer: String,
     calories: Number,
     /*fat: Number,
@@ -20,7 +19,19 @@ const ProductSchema = new mongoose.Schema({
     protein: Number*/
 });
 
-const ProductData = mongoose.model('Gerichte', ProductSchema);
+//Ingredient DB
+const GerichtsListeSchema = new mongoose.Schema({
+    title: String,
+    list: [GerichtSchema]
+    //producer: String,
+    //calories: Number,
+    /*fat: Number,
+    carbohydrates: Number,
+    protein: Number*/
+});
+
+
+const GerichtsListeData = mongoose.model('Gerichte', GerichtsListeSchema);
 
 
 
@@ -49,8 +60,8 @@ server.post("/gerichte/add", (req, res) =>{
 /*hier werden Objekte auf der Datenbank abgefragt
 es werden hier alle Gerichte abgefragt*/
 server.get("/gerichte/all", async (req, res)=>{
-    const gerichte = await ProductData.find();
-    console.log(gerichte)
+    const gerichte = await GerichtsListeData.find();
+    //console.log(gerichte)
      res.send(gerichte)
 })
 
@@ -74,6 +85,11 @@ const WorkoutSchema = new mongoose.Schema({
     workout_date: Date,
     duration: Number,
     exercise: [ExerciseSchema]
+})
+
+server.post("/gerichte/liste/add", async (req, res)=>{
+    const data = await GerichtsListeData.create(req.body)
+    res.send(200)
 })
 
 const WorkoutData = mongoose.model('Workouts', WorkoutSchema);
