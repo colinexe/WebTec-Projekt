@@ -39,9 +39,28 @@ body.active-modal {
 .save-changes{
     position: absolute;
     bottom: 5px;
-    right: 30px;
+    right: 10px;
     line-height: 1.4;
     padding-bottom: 5px;
 }
 
+.delete-exercise{
+    position: absolute;
+    bottom: 5px;
+    right: 100px;
+    color: rgb(0 0 0);
+    line-height: 1.4;
+    padding-bottom: 5px;
+    border-width: 2px;
+    border-color: red;
+    background-color: white;
+    
+
+
+}
+
+.delete-exercise:hover{
+    background-color: red;
+    color: rgb(255 255 255);
+}
 

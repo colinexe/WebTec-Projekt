@@ -10,11 +10,13 @@ function workoutDetail(elem) {
     const [workouts, setWorkouts] = useState()
     const [my_set_repetition, setMySetRepetition] = useState([])
     const [my_set_weight, setMySetWeight] = useState([])
+    const [my_set_id, setMySetId] = useState([])
     const [exercise_index, setExerciseIndex] = useState()
     const [myWorkout, setMyWorkout] = useState()
     const [exercise_name, setExerciseName] = useState()
 
     const [updated_exercise, setUpdatedExercise] = useState()
+
 
     const location = useLocation();
     const myId= location.state._id
@@ -69,10 +71,14 @@ function workoutDetail(elem) {
             let set_weight = e.set[i].set_weight
             my_set_weight.push(set_weight)
         }
+        for (let i = 0, len = e.set.length; i < len; i++){
+            let _id = e.set[i]._id
+            my_set_id.push(_id)
+        }
     }
 
     const deleteSet = async (myworkout, ind, index_of_set) => {
-        setExerciseName([...exercise_name, {myworkout:myworkout, exercise_index: ind, set_index: index_of_set}])
+        setExerciseName([...exercise_name, {myworkout: myworkout, exercise_index: ind, set_index: index_of_set}])
         var setarr = myworkout.exercise[ind].set
         //console.log(myworkout.exercise[ind].set[setarr.length-1]._id)
         console.log(JSON.stringify({
@@ -93,20 +99,50 @@ function workoutDetail(elem) {
         });
     }
 
-    const changeExercise = async (e, ind) =>{
-        setExerciseName([...exercise_name, {exercise_index: ind, exercise_name: exercise_name, _id: e._id, my_set_repetition: my_set_repetition,
-            my_set_weight: my_set_weight}])
-        
+    const deleteExercise = async (myworkout, ind) => {
+        setExerciseName([...exercise_name, {myworkout: myworkout, exercise_index: ind}])
+        console.log(JSON.stringify({
+            exercise_index: ind,
+            workout_id: myworkout._id,
+            exercise_id: myworkout.exercise[ind]._id
+        }))
+       const res = await fetch("/workouts/deleteExercise", {
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                exercise_index: ind,
+                workout_id: myworkout._id,
+                exercise_id: myworkout.exercise[ind]._id
+            }),
+        });
+    }
+
+    const changeExercise = async (myworkout, e, ind) =>{
+        setExerciseName([...exercise_name, {workout_id: myworkout._id, exercise_index: ind, exercise_name: exercise_name, _id: e._id, my_set_repetition: my_set_repetition,
+            my_set_weight: my_set_weight, my_set_id: my_set_id}])
+            console.log(JSON.stringify({
+                workout_id: myworkout._id,
+                exercise_index: ind,
+                exercise_name: exercise_name,
+                my_set_repetition: my_set_repetition,
+                my_set_weight: my_set_weight,
+                my_set_id: my_set_id,
+                _id: e._id
+            }))
         const res = await fetch("/workouts/update", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                workout_id: myworkout._id,
                 exercise_index: ind,
                 exercise_name: exercise_name,
                 my_set_repetition: my_set_repetition,
                 my_set_weight: my_set_weight,
+                my_set_id: my_set_id,
                 _id: e._id
             }),
         });
@@ -168,7 +204,7 @@ function workoutDetail(elem) {
                                 <span className=" w-12">Set {index_of_set+1}:&nbsp;</span>
                                 
                                 <input size="3" type="number" className="leading-snug" defaultValue={el_of_set.set_repetition}
-                                onChange={(e) => updateSetRepetition(e.target.value, index_of_set)}></input>
+                                onChange={(e) => updateSetRepetition(e.target.value, index_of_set, el_of_set._id)}></input>
                                 &nbsp;X&nbsp;
                                 <input size="3" type="number" className="leading-snug" defaultValue={el_of_set.set_weight}
                                 onChange={(e) => updateSetWeight(e.target.value, index_of_set)}></input> 
@@ -185,24 +221,27 @@ function workoutDetail(elem) {
                             </div>
                             )}
                             <div>
+                                {/* Modal letztes Set das noch "leer" ist*/}
                                 <span className=" w-12">Set {el_of_exercise.set.length+1}:&nbsp;</span>
                                 
                                 <input size="3" type="number" className="leading-snug"
-                                onChange={(e) => updateSetRepetition(e.target.value, index_of_set)}></input>
+                                onChange={(e) => updateSetRepetition(e.target.value, el_of_exercise.set.length)}>
+                                </input>
                                 &nbsp;X&nbsp;
                                 <input size="3" type="number" className="leading-snug"
-                                onChange={(e) => updateSetWeight(e.target.value, index_of_set)}></input> 
+                                onChange={(e) => updateSetWeight(e.target.value, el_of_exercise.set.length)}></input> 
                                 &nbsp;kg&nbsp;
-                                <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                + Set 
-                                </button>
+
                             </div>
                             <div>
                                 <span className="w-12">&nbsp;</span>
                             
-                            
+                                <button id="deleteExerciseButton" className="delete-exercise btn-modal rounded px-2 py-1 text-xs font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            onClick={() => {deleteExercise(myWorkout, ind)}}>
+                                Delete Exercise
+                            </button>
                             <button id="saveButton" className="save-changes btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            onClick={() => {changeExercise(el_of_exercise, ind), window.location.reload()}}>
+                            onClick={() => {changeExercise(myWorkout, el_of_exercise, ind)}}>
                                 Save Changes
                             </button>
                             </div>
@@ -217,17 +256,25 @@ function workoutDetail(elem) {
                     </div>
                      
                     <div>
+                    
                     {el_of_exercise.set.map((el_of_set, index_of_set) =>{
+                        // Sets in Workout Übersicht (nicht Modal)
                         return(
                             <div key={index_of_set} className="indent-4">
                             <p>Set {index_of_set+1}: {el_of_set.set_repetition} x {el_of_set.set_weight} kg</p>
 
                         </div>)
                     })}</div>
+
+                    
                         
 
                 </div>)
-            })}</div>
+            })}
+            <input onChange={(e) => setExerciseName(e.target.value)} placeholder="Exercise Name"></input>
+            <button onClick={() => {changeExercise(myWorkout, exercise_name, myWorkout.exercise.length)}}>+ New Exercise</button>
+            </div>
+            
     </>
 
     )

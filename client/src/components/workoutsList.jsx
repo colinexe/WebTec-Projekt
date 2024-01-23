@@ -30,8 +30,12 @@ function workoutList() {
     return (
     <>
     <h1 className="text-2xl font-bold flex justify-center items-center">Workouts</h1>
+        
+        <button className="bg-gray-200 bg-zinc-300 rounded-lg p-2 m-5 mx-auto w-4/12 block text-center">
+            + New Workout
+        </button>
         {
-        workouts.map((el_of_workout, index) =>{
+        workouts.sort((a, b) => new Date(b.workout_date) - new Date(a.workout_date)).map((el_of_workout, index) =>{
             return (
                 
             <button  key={index} className="bg-gray-200 bg-zinc-300 rounded-lg p-2 m-5 mx-auto w-4/12 block text-left"

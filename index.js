@@ -97,21 +97,42 @@ server.post("/workouts/add", (req, res) =>{
     res.send("ok")
 })
 
+server.post("/workouts/deleteExercise", async (req, res) => {
+    //Require: workout_id, exercise index (ind), set_id (mit pop)
+    const {workout_id, exercise_index, exercise_id} = req.body
+    const filter = {"_id": workout_id}
+    console.log("Delete in BE")
+    console.log(req.body)
+    const testUpdate = String("exercise")
+
+    //console.log(WorkoutData.find(filter))
+
+    WorkoutData.updateOne(filter, {$pull: {[testUpdate]: {"_id": exercise_id}}}).then((error, data) => {
+       res.send("deleted")
+       console.log("Exercise Deletion success") 
+       //if error -> send error UND if data -> ...
+    })
+    //console.log(WorkoutData.find(filter))
+
+})
+
 server.post("/workouts/deleteSet", async (req, res) => {
     //Require: workout_id, exercise index (ind), set_id (mit pop)
     const {workout_id, exercise_index, set_id} = req.body
     const filter = {"_id": workout_id}
+    console.log("Delete in BE")
     console.log(req.body)
     const testUpdate = String("exercise."+exercise_index+".set")
 
-    console.log(WorkoutData.find(filter))
+    //console.log(WorkoutData.find(filter))
 
     WorkoutData.updateOne(filter, {$pull: {[testUpdate]: {"_id": set_id}}}).then((error, data) => {
-       res.send(data) 
+       res.send("deleted")
+       console.log("Deletion success") 
        //if error -> send error UND if data -> ...
     })
-    console.log(WorkoutData.find(filter))
-    
+    //console.log(WorkoutData.find(filter))
+
 })
 
 server.post("/workouts/update", async (req, res) => {
@@ -119,14 +140,23 @@ server.post("/workouts/update", async (req, res) => {
     console.log(req.body)
     console.log("Hallo BE")
     
-    const {exercise_name, _id, exercise_index, my_set_weight, my_set_repetition} = req.body
-    const filter = {"exercise._id": _id}; // <- gives full Workout Document
+    const {workout_id, exercise_name, _id, exercise_index, my_set_weight, my_set_repetition, my_set_id} = req.body
+    const filter = {"_id": workout_id}; // <- gives full Workout Document
     var obj = {};
 
-    console.log(my_set_repetition)
+
+    if(_id == undefined){
+        var update_exercise_id = String("exercise."+exercise_index+"._id")
+        var new_exercise_id = new mongoose.Types.ObjectId()
+        Object.assign(obj, {[update_exercise_id]: new_exercise_id})
+    }
+    
     const testUpdate = String("exercise."+exercise_index+".exercise_name")
     Object.assign(obj, {[testUpdate]: exercise_name})
     
+    while (my_set_id.length != my_set_repetition.length){
+        my_set_id.push(new mongoose.Types.ObjectId())
+    }
 
     for (let i = 0, len = my_set_repetition.length; i < len; i++){
         var update_reps = String("exercise."+exercise_index+".set."+i+".set_repetition")
@@ -139,13 +169,13 @@ server.post("/workouts/update", async (req, res) => {
         Object.assign(obj, {[update_weight]: my_set_weight[i]})
         
     }
-
-
+    for (let i = 0, len = my_set_id.length; i < len; i++){
+        var update_set_id = String("exercise."+exercise_index+".set."+i+"._id")
+        Object.assign(obj, {[update_set_id]: my_set_id[i]})
+        
+    }
     console.log(obj)
     const update = {$set: obj}
-
-
-    
     await WorkoutData.findOneAndUpdate(filter, update);
 })
 
