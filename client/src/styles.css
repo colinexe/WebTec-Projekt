@@ -15,9 +15,38 @@
     text-align: center;
 }
 
+.buttons-in-detail{
+    justify-content: space-evenly;
+    min-width: 90%;
+    max-width: 90%;
+    display: block;
+}
+
+.delete-button {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    width: 5rem;
+    max-width: 15rem;
+    border-width: 2px;
+    border-color: red;
+    background-color: white;
+}
+
+.delete-button:hover {
+    background-color: red;
+    color: rgb(255 255 255);
+}
+
 .button-normal:hover {
-    background-color: #6366F1; 
-    }
+    background-color: #6366F1;
+}
 
 
 body.active-modal {
@@ -59,33 +88,7 @@ body.active-modal {
     padding: 5px 7px;
 }
 
-.save-changes {
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
-    line-height: 1.4;
-    padding-bottom: 5px;
-}
 
-.delete-exercise {
-    position: absolute;
-    bottom: 5px;
-    right: 100px;
-    color: rgb(0 0 0);
-    line-height: 1.4;
-    padding-bottom: 5px;
-    border-width: 2px;
-    border-color: red;
-    background-color: white;
-
-
-
-}
-
-.delete-exercise:hover {
-    background-color: red;
-    color: rgb(255 255 255);
-}
 
 .nav-bar {
     background: #F1F1F1;

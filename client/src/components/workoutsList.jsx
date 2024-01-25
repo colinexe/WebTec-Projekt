@@ -53,7 +53,7 @@ function workoutList() {
         <>
             <h1 className="text-2xl font-bold flex justify-center items-center">Workouts</h1>
 
-            <button className="workout-list-tile"
+            <button className="workout-list-tile text-center"
                 onClick={() => { addWorkout() }}>
                 + New Workout
             </button>

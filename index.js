@@ -90,6 +90,23 @@ server.post("/workouts/add", async (req, res) =>{
     console.log(data)
     res.send(data)
 })
+server.post("/workouts/deleteWorkout", async (req, res) => {
+    //Require: workout_id, exercise index (ind), set_id (mit pop)
+    const {workout_id} = req.body
+    const filter = {"_id": workout_id}
+    console.log("Delete in BE")
+    console.log(req.body)
+    const testUpdate = String("exercise")
+
+    //console.log(WorkoutData.find(filter))
+
+    WorkoutData.deleteOne(filter).then((error, data) => {
+       res.send("deleted")
+       console.log("Exercise Deletion success") 
+       //if error -> send error UND if data -> ...
+    })
+    //console.log(WorkoutData.find(filter))
+})
 
 server.post("/workouts/deleteExercise", async (req, res) => {
     //Require: workout_id, exercise index (ind), set_id (mit pop)

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import "../styles.css";
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 function workoutDetail(elem) {
     <link rel="stylesheet" href="../styles.css"></link>
@@ -13,9 +14,12 @@ function workoutDetail(elem) {
 
     const [new_set_repetition, setNewSetRepetition] = useState()
     const [new_set_weight, setNewSetWeight] = useState()
-    const [myWorkoutIndex, setMyWorkoutIndex] = useState()
-    const [new_exercise_name, setNewExerciseName] = useState()
-    const [created_exercise, setCreatedExercise] = useState()
+
+    const navigate = useNavigate();
+    const navigateWorkoutList = () => {
+        console.log("test")
+        navigate(-1);
+    }
 
 
     const location = useLocation();
@@ -91,6 +95,22 @@ function workoutDetail(elem) {
         const updatedSetRepetition = [...myWorkout.exercise];
         updatedSetRepetition[index_exercise].set[index_set].set_repetition = parseInt(update)
         setWorkouts(updatedSetRepetition)
+    }
+
+    const deleteWorkout = async (myworkout) => {
+        //Funktioniert 10/10 -> schauen weil refresh benötigt ist?
+        console.log(JSON.stringify({
+            workout_id: myworkout._id,
+        }))
+        const res = await fetch("/workouts/deleteWorkout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                workout_id: myworkout._id,
+            }),
+        });
     }
 
     const deleteExercise = async (myworkout, ind) => {
@@ -216,7 +236,7 @@ function workoutDetail(elem) {
                 <div className="workout-detail-macro">
                 <div>
                     <h1 className="text-2xl font-bold flex justify-center items-center">
-                        <input className="bg-white w-7/12 text-center border-b-2" value={myWorkout.workout_type}
+                        <input className="bg-white w-10/12 text-center border-b-2" value={myWorkout.workout_type}
                             onChange={(e) => updateWorkoutName(e.target.value)}></input>
                     </h1>
                 </div>
@@ -258,7 +278,7 @@ function workoutDetail(elem) {
 
                                             <h2>Edit Exercise</h2>
                                         </div>
-                                        <div>Name:
+                                        <div>
                                             <input type="text" defaultValue={el_of_exercise.exercise_name}
                                                 onChange={(e) => updateExerciseName(e.target.value, ind)}></input>
                                         </div>
@@ -301,16 +321,15 @@ function workoutDetail(elem) {
                                                 </button>
 
                                             </div>
-                                            <div>
-                                                <span className="w-12">&nbsp;</span>
-
-                                                <button id="deleteExerciseButton" className="delete-exercise btn-modal rounded px-2 py-1 text-xs font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            <div className="flex justify-end mt-2 gap-1">
+                                                
+                                                <button  className="delete-button"
                                                     onClick={() => { deleteExercise(myWorkout, ind), sleep(300).then(() => window.location.reload()) }}>
-                                                    Delete Exercise
+                                                    Delete
                                                 </button>
-                                                <button id="saveButton" className="save-changes btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                <button  className="button-normal"
                                                     onClick={() => { saveExerciseChanges(myWorkout), toggleModal(el_of_exercise._id) }}>
-                                                    Save Changes
+                                                    Save
                                                 </button>
                                             </div>
                                         </div>
@@ -339,19 +358,20 @@ function workoutDetail(elem) {
 
                         </div>)
                 })}
-                <div>
-                    <input onChange={(e) => setExerciseName(e.target.value)} placeholder="Exercise Name"></input>
-                    {/*<button onClick={() => {saveExerciseChanges(myWorkout, exercise_name, myWorkout.exercise.length)}}>+ New Exercise (recheck)</button>*/}
-                    <button className="button-normal" onClick={() => { addExerciseFE(exercise_name) }}>+ Exercise</button>
-                </div>
+                
+                    
+
+                    <button className="workout-list-tile text-center" onClick={() => { addExerciseFE(exercise_name) }}>+ Exercise</button>
+                
 
             </div>
-            <div>
-            <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => console.log(savedData)}>Delete Workout</button>
-                <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => saveExerciseChanges(myWorkout)}>Save Workout</button>
-                
+            <div className="flex justify-evenly ">
+                <div className="buttons-in-detail flex gap-1">
+            <button className="delete-button  basis-1/2"
+                    onClick={() => {deleteWorkout(myWorkout), navigate(-1)}}>Delete Workout</button>
+                <button className="button-normal  basis-1/2"
+                    onClick={() => {saveExerciseChanges(myWorkout)}}>Save Workout</button>
+                </div>
             </div>
 
 
