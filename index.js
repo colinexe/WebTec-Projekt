@@ -75,26 +75,28 @@ const WorkoutSchema = new mongoose.Schema({
 const WorkoutData = mongoose.model('Workouts', WorkoutSchema);
 
 //initial erstellen
-server.post("/workouts/add", (req, res) =>{
-    //console.log(req.body);
-    const {workout_type, workout_date, duration, exercise} = req.body;
-    const {exercise_name, set} = exercise[0];
+server.post("/workouts/add", async (req, res) =>{
+    console.log(req.body);
+    var _id = new mongoose.Types.ObjectId();
+    var workout_date = new Date().toJSON()
+    //const {workout_type, workout_date, duration, exercise} = req.body;
+    //const {exercise_name, set} = exercise[0];
     //console.log(exercise[0]);
-    const {set_weight, set_repetition} = set[0];
+    //const {set_weight, set_repetition} = set[0];
     //console.log(set[0]);
     WorkoutData.create({
-        workout_type: workout_type,
-        workout_date: workout_date,
-        duration: "5",
-        exercise: [{
-            exercise_name: exercise_name,
-            set: [{
-                set_weight: set_weight,
-                set_repetition: set_repetition
-            }]
-        }]
+        workout_type: "Neues Workout",
+        _id: _id,
+        workout_date: workout_date
     })
-    res.send("ok")
+
+    let data = {}
+
+    data = await WorkoutData.findOne({"_id": _id});
+    
+    
+    console.log(data)
+    res.send(data)
 })
 
 server.post("/workouts/deleteExercise", async (req, res) => {
@@ -137,51 +139,24 @@ server.post("/workouts/deleteSet", async (req, res) => {
 
 server.post("/workouts/update", async (req, res) => {
     //Require workout ID, exercise index, set index, setweight/setreps and value
-    console.log(req.body)
     console.log("Hallo BE")
     
-    const {workout_id, exercise_name, _id, exercise_index, my_set_weight, my_set_repetition, my_set_id} = req.body
-    const filter = {"_id": workout_id}; // <- gives full Workout Document
-    var obj = {};
-
-
-    if(_id == undefined){
-        var update_exercise_id = String("exercise."+exercise_index+"._id")
-        var new_exercise_id = new mongoose.Types.ObjectId()
-        Object.assign(obj, {[update_exercise_id]: new_exercise_id})
-    }
+    var testdata = req.body
+    const filter = {"_id": testdata.myworkout._id}
     
-    const testUpdate = String("exercise."+exercise_index+".exercise_name")
-    Object.assign(obj, {[testUpdate]: exercise_name})
-    
-    while (my_set_id.length != my_set_repetition.length){
-        my_set_id.push(new mongoose.Types.ObjectId())
-    }
+    await WorkoutData.findOneAndUpdate(filter, {$set: testdata.myworkout})
+    console.log("Update Finished in BE")
 
-    for (let i = 0, len = my_set_repetition.length; i < len; i++){
-        var update_reps = String("exercise."+exercise_index+".set."+i+".set_repetition")
-        Object.assign(obj, {[update_reps]: my_set_repetition[i]})
-        
-    }
+    let data = {}
 
-    for (let i = 0, len = my_set_weight.length; i < len; i++){
-        var update_weight = String("exercise."+exercise_index+".set."+i+".set_weight")
-        Object.assign(obj, {[update_weight]: my_set_weight[i]})
-        
-    }
-    for (let i = 0, len = my_set_id.length; i < len; i++){
-        var update_set_id = String("exercise."+exercise_index+".set."+i+"._id")
-        Object.assign(obj, {[update_set_id]: my_set_id[i]})
-        
-    }
-    console.log(obj)
-    const update = {$set: obj}
-    await WorkoutData.findOneAndUpdate(filter, update);
+    data = await WorkoutData.findOne({"_id": testdata.myworkout._id});
+
+    res.send(data)
 })
 
 
 server.get("/workouts/all", async (req, res)=>{
-    const workouts = await WorkoutData.find();
+    const workouts = await WorkoutData.find().sort({workout_date: -1});
     //console.log(workouts)
     res.send(workouts)
 })
