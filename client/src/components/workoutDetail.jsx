@@ -23,7 +23,7 @@ function workoutDetail(elem) {
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
-      }
+    }
 
     const toggleModal = (exercise) => {
         let myExercise = document.getElementById(exercise);
@@ -57,6 +57,23 @@ function workoutDetail(elem) {
         }
     }
 
+    const updateWorkoutName = (update) => {
+        const updatedWorkoutName = [myWorkout]
+        updatedWorkoutName[0].workout_type = update
+        setWorkouts(updatedWorkoutName)
+    }
+
+    const updateWorkoutDate = (update) => {
+        const updatedWorkoutDate = [myWorkout]
+        updatedWorkoutDate[0].workout_date = update
+        setWorkouts(updatedWorkoutDate)
+    }
+
+    const updateWorkoutDuration = (update) => {
+        const updatedWorkoutDuration = [myWorkout]
+        updatedWorkoutDuration[0].duration = update
+        setWorkouts(updatedWorkoutDuration)
+    }
 
     const updateExerciseName = (update, index_exercise) => {
         const updatedExerciseName = [...myWorkout.exercise];
@@ -100,15 +117,15 @@ function workoutDetail(elem) {
     }
 
     const clearFields = (ind) => {
-        document.getElementById("newSetRepetitionField"+ind).value ="";
-        document.getElementById("newSetWeightField"+ind).value ="";
+        document.getElementById("newSetRepetitionField" + ind).value = "";
+        document.getElementById("newSetWeightField" + ind).value = "";
         setNewSetRepetition(undefined)
         setNewSetWeight(undefined)
     }
 
     const saveExerciseChanges = async (myworkout) => {
         //Funktioniert (BE POST)
-        console.log(workouts)
+        console.log("workouts", workouts)
         console.log(JSON.stringify({
             myworkout
         }))
@@ -126,12 +143,12 @@ function workoutDetail(elem) {
 
     const addSetFE = (index_exercise) => {
         const updatedWorkoutSets = [...myWorkout.exercise];
-        updatedWorkoutSets[index_exercise].set.push({"set_repetition": parseInt(new_set_repetition), "set_weight": parseInt(new_set_weight)})
+        updatedWorkoutSets[index_exercise].set.push({ "set_repetition": parseInt(new_set_repetition), "set_weight": parseInt(new_set_weight) })
         console.log(updatedWorkoutSets)
         setWorkouts([...workouts, updatedWorkoutSets])
-        
+
         console.log(workouts)
-        
+
     }
 
     const deleteSetFE = (index_exercise, index_set) => {
@@ -139,14 +156,14 @@ function workoutDetail(elem) {
         const updatedWorkoutSets = [...myWorkout.exercise];
         updatedWorkoutSets[index_exercise].set.splice(index_set, 1)
         setWorkouts(updatedWorkoutSets);
-        console.log("Set Index "+ index_set +" erfolgreich gelöscht:");
+        console.log("Set Index " + index_set + " erfolgreich gelöscht:");
     }
 
     const addExerciseFE = async (new_exercise) => {
         //console.log(myWorkout)
         const updatedWorkoutExercises = myWorkout
-        updatedWorkoutExercises.exercise.push({"exercise_name": new_exercise})
-        console.log (updatedWorkoutExercises)
+        updatedWorkoutExercises.exercise.push({ "exercise_name": new_exercise })
+        console.log(updatedWorkoutExercises)
         //console.log(myWorkout)
         //setMyWorkout(updatedWorkoutExercises)
         console.log(myWorkout)
@@ -160,11 +177,31 @@ function workoutDetail(elem) {
                 myworkout
             }),
         });
+
+        const data = await res.text();
+        const myObj = JSON.parse(data)
+        const index = myObj.exercise.length -1
+
+
+
         console.log("post complete")
+        localStorage.setItem('exerciseToShow', JSON.stringify(myObj.exercise[index]));
 
-        sleep(1000).then(() => window.location.reload())
+        window.location.reload()
 
-        
+
+        //sleep(1000).then(() => toggleModal(myObj.exercise[index].exercise_name))
+    }
+
+    const exerciseToShow = localStorage.getItem('exerciseToShow'); 
+
+    if (exerciseToShow) {
+        console.log("in if")
+        localStorage.removeItem("exerciseToShow")
+        const parsedExercise = JSON.parse(exerciseToShow);
+        // Assuming 'exercise_id' is the actual ID of the modal you want to toggle
+        //console.log(parsedExercise)
+        sleep(2000).then(() => toggleModal(parsedExercise._id))
     }
 
     useEffect(() => {
@@ -174,30 +211,47 @@ function workoutDetail(elem) {
     if (loading) return <div>Is Loading...</div>
     return (
         <>
-            <h1 className="text-2xl font-bold flex justify-center items-center">WorkoutDetail</h1>
-            <div className="workout-list-tile">
-                <p className="text-xl font-bold">
-                    {myWorkout.workout_type}
-                    {/*{workouts[1].workout_type}*/}
-                    &nbsp;
-                    {String(myWorkout.workout_date).substring(0, 10)}
-                </p>
+
+            <div className="">
+                <div className="workout-detail-macro">
+                <div>
+                    <h1 className="text-2xl font-bold flex justify-center items-center">
+                        <input className="bg-white w-7/12 text-center border-b-2" value={myWorkout.workout_type}
+                            onChange={(e) => updateWorkoutName(e.target.value)}></input>
+                    </h1>
+                </div>
+                <div className="grid grid-cols-2 mt-2">
+                    <span className="flex items-center justify-center">
+                        <input className="w-8/12" type="date" value={String(myWorkout.workout_date).substring(0, 10)}
+                            onChange={(e) => updateWorkoutDate(e.target.value)}></input>
+                    </span>
+                    <span className="flex items-center justify-center">
+                    <input className="w-6/12" type="number" value={myWorkout.duration}
+                        onChange={(e) => updateWorkoutDuration(e.target.value)}></input>
+                    &nbsp; mins
+                </span>
+
+                </div>
+
+                </div>
                 
                 {myWorkout.exercise.map((el_of_exercise, ind) => {
                     return (
-                        <div key={ind}>
-
-                            <span className="text-lg">exercise: {el_of_exercise.exercise_name}&nbsp;&nbsp;</span>
-                            <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                onClick={() => {toggleModal(el_of_exercise.exercise_name) }}>
-                                Edit {el_of_exercise.exercise_name}
-                            </button>
-
+                        <div key={ind} className="workout-list-tile">
+                            <div className="flex flex-row"> 
+                            <span className="text-lg font-bold basis-1/2">{el_of_exercise.exercise_name}&nbsp;&nbsp;</span>
+                            <span className="basis-1/2 flex justify-end">
+                                <button className="button-normal"
+                                onClick={() => { toggleModal(el_of_exercise._id), console.log(el_of_exercise) }}>
+                                Edit
+                                </button>
+                            </span>
+                            </div>
                             <div>
 
                                 {/* MODAL */}
-                                <div id={el_of_exercise.exercise_name} className="hidden">
-                                    <div onClick={() => { toggleModal(el_of_exercise.exercise_name), window.location.reload() }} className="overlay"></div>
+                                <div id={el_of_exercise._id} className="hidden">
+                                    <div onClick={() => { toggleModal(el_of_exercise._id), window.location.reload() }} className="overlay"></div>
                                     <div className="modal-content">
                                         <div className="text-lg font-semibold">
 
@@ -233,16 +287,16 @@ function workoutDetail(elem) {
 
                                             <div>
                                                 {/* Modal letztes Set das noch "leer" ist*/}
-                                                
 
-                                                <input size="3" type="number" className="leading-snug ml-11" id={"newSetRepetitionField"+ind}
+
+                                                <input size="3" type="number" className="leading-snug ml-11" id={"newSetRepetitionField" + ind}
                                                     onChange={(e) => setNewSetRepetition(e.target.value)}>
                                                 </input>
                                                 &nbsp;X&nbsp;
-                                                <input size="3" type="number" className="leading-snug" id={"newSetWeightField"+ind}
+                                                <input size="3" type="number" className="leading-snug" id={"newSetWeightField" + ind}
                                                     onChange={(e) => setNewSetWeight(e.target.value)}></input>
                                                 &nbsp;kg&nbsp;
-                                                <button onClick={() => {addSetFE(ind), clearFields(ind)}}>
+                                                <button onClick={() => { addSetFE(ind), clearFields(ind) }}>
                                                     + Add Set
                                                 </button>
 
@@ -251,17 +305,17 @@ function workoutDetail(elem) {
                                                 <span className="w-12">&nbsp;</span>
 
                                                 <button id="deleteExerciseButton" className="delete-exercise btn-modal rounded px-2 py-1 text-xs font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                                    onClick={() => {deleteExercise(myWorkout, ind), sleep(300).then(() => window.location.reload())}}>
+                                                    onClick={() => { deleteExercise(myWorkout, ind), sleep(300).then(() => window.location.reload()) }}>
                                                     Delete Exercise
                                                 </button>
                                                 <button id="saveButton" className="save-changes btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                                    onClick={() => { saveExerciseChanges(myWorkout), toggleModal(el_of_exercise.exercise_name) }}>
+                                                    onClick={() => { saveExerciseChanges(myWorkout), toggleModal(el_of_exercise._id) }}>
                                                     Save Changes
                                                 </button>
                                             </div>
                                         </div>
 
-                                        <button className="close-modal" onClick={() => { toggleModal(el_of_exercise.exercise_name), window.location.reload() }}> X </button>
+                                        <button className="close-modal" onClick={() => { toggleModal(el_of_exercise._id), window.location.reload() }}> X </button>
                                     </div>
                                 </div>
 
@@ -288,8 +342,15 @@ function workoutDetail(elem) {
                 <div>
                     <input onChange={(e) => setExerciseName(e.target.value)} placeholder="Exercise Name"></input>
                     {/*<button onClick={() => {saveExerciseChanges(myWorkout, exercise_name, myWorkout.exercise.length)}}>+ New Exercise (recheck)</button>*/}
-                    <button onClick={() => {addExerciseFE(exercise_name)}}>+ New Exercise (recheck)</button>
+                    <button className="button-normal" onClick={() => { addExerciseFE(exercise_name) }}>+ Exercise</button>
                 </div>
+
+            </div>
+            <div>
+            <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    onClick={() => console.log(savedData)}>Delete Workout</button>
+                <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    onClick={() => saveExerciseChanges(myWorkout)}>Save Workout</button>
                 
             </div>
 

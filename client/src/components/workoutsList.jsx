@@ -9,7 +9,6 @@ function workoutList() {
     <link rel="stylesheet" href="../styles.css"></link>
     const [loading, setLoading] = useState(true)
     const [workouts, setWorkouts] = useState()
-    const [created_id, setCreatedId] = useState()
 
 
     const navigate = useNavigate();
@@ -24,25 +23,15 @@ function workoutList() {
     }
 
     const addWorkout = async (e) => {
-        //var _id = new mongoose.Types.ObjectId()
-        //console.log(_id)
         const res = await fetch("/workouts/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                workout_type: "Test"
-                //_id: _id  
-            }),
+            },  
         }
         );
         const data = await res.text();
         const myObj = JSON.parse(data)
-        setCreatedId(myObj)
-
-        console.log("create done", myObj._id);
-
 
         sleep(5000).then(() => navigateWorkoutDetail(myObj._id))
 

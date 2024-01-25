@@ -19,12 +19,33 @@ Ingredient/Product -
     ]
 }
 
+{
+    Mahlzeiten: [
+        Mahlzeit_Name
+        Zutaten: [
 
+        ]
+    ]
+}
+// Frückstuck Mittagsessen
+
+Document[0].Zutaten[]
+
+
+{
+    Datum
+    Frühstück: {
+        Zutaten: []
+    }
+}
+
+Document.Frühstück
 
 
 
 WorkoutDocument
 {
+    _id: ObjectID
     user: String,
     workout_type: String,
     date: Date,

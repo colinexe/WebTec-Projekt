@@ -79,11 +79,6 @@ server.post("/workouts/add", async (req, res) =>{
     console.log(req.body);
     var _id = new mongoose.Types.ObjectId();
     var workout_date = new Date().toJSON()
-    //const {workout_type, workout_date, duration, exercise} = req.body;
-    //const {exercise_name, set} = exercise[0];
-    //console.log(exercise[0]);
-    //const {set_weight, set_repetition} = set[0];
-    //console.log(set[0]);
     WorkoutData.create({
         workout_type: "Neues Workout",
         _id: _id,
@@ -91,10 +86,7 @@ server.post("/workouts/add", async (req, res) =>{
     })
 
     let data = {}
-
-    data = await WorkoutData.findOne({"_id": _id});
-    
-    
+    data = await WorkoutData.findOne({"_id": _id});      
     console.log(data)
     res.send(data)
 })
