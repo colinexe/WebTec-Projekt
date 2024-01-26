@@ -23,7 +23,7 @@ function Navigation() {
 
     return (
     <div>
-        <div>Eure Fitnessapp</div>
+        <div className="h-7"></div>
         <div className="nav-bar">
             <button id="GerichtList" onClick={navigateGerichtList} className="nav-icon">Home</button>
             <button id="GerichtForm" onClick={navigateGerichtForm} className="nav-icon">Gerichte</button>

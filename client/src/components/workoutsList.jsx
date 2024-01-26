@@ -33,7 +33,7 @@ function workoutList() {
         const data = await res.text();
         const myObj = JSON.parse(data)
 
-        sleep(5000).then(() => navigateWorkoutDetail(myObj._id))
+        sleep(1000).then(() => navigateWorkoutDetail(myObj._id))
 
     }
 

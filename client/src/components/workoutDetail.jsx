@@ -242,7 +242,7 @@ function workoutDetail(elem) {
                 </div>
                 <div className="grid grid-cols-2 mt-2">
                     <span className="flex items-center justify-center">
-                        <input className="w-8/12" type="date" value={String(myWorkout.workout_date).substring(0, 10)}
+                        <input className="w-9/12" type="date" value={String(myWorkout.workout_date).substring(0, 10)}
                             onChange={(e) => updateWorkoutDate(e.target.value)}></input>
                     </span>
                     <span className="flex items-center justify-center">

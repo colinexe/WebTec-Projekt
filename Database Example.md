@@ -44,15 +44,14 @@ Document.Frühstück
 
 
 WorkoutDocument
+
 {
-    _id: ObjectID
     user: String,
     workout_type: String,
     date: Date,
     exercise: [
         {
         exercise_name: String,
-        muscle_group: String,
         set:[
             {
             set_number: Number,
