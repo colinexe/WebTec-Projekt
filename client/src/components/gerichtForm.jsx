@@ -8,6 +8,10 @@ import { Link } from "react-router-dom";
 function gerichtForm() {
     const [gericht, setGericht]  = useState();
     const [calories, setCalories] = useState();
+    const [fat, setFat] = useState();
+    const [totalFat, setTotalFat] = useState(0);
+    const [protein, setProtein] = useState();
+    const [totalProtein, setTotalProtein] = useState(0);
     const [loading,setLoading] = useState(true)
     const [gerichte, setGerichte] = useState();
     const [datum, setDatum] = useState();
@@ -57,7 +61,9 @@ function gerichtForm() {
         );
         */   
         setTotalCalories(previous => previous + Number(calories));
-      setGerichtListe([...gerichtListe, {name: gericht, calories: calories}])
+        setTotalFat(previous => previous + Number(fat));
+        setTotalProtein(previous => previous + Number(protein));
+      setGerichtListe([...gerichtListe, {name: gericht, calories: calories, fat: fat, protein: protein}])
       }
 
     const validateButton = ()=>{
@@ -81,6 +87,8 @@ function gerichtForm() {
     const clearFields = () => {
         document.getElementById("gerichtField").value = "";
         document.getElementById("kalorienField").value = "";
+        document.getElementById("fatField").value = "";
+        document.getElementById("proteinField").value = "";
         setButtonEnabled(true)
         setGericht("")
         setCalories(undefined)
@@ -112,9 +120,9 @@ const getCurrentDate = () => {
         <Navigation />
         <div className="FAQ-visibility"><FaqContent /></div>
         </div>
-
+<div className="center-content">
     <div className="bg-green-200 flex justify-center items-center h-full">
-        <div className="grid grid-cols-8 md:w-1/4 gap-2 w-full md:p-0 p-3">
+        <div className="grid grid-cols-8 md:w-1/2 gap-2 w-full md:p-0 p-3">
         <br className="col-span-full"></br>
         <div className="flex justify-center col-span-full">{datum}</div>
          <input id="titleField"
@@ -122,14 +130,15 @@ const getCurrentDate = () => {
         onChange={(e) => setTitle(e.target.value)}
         type="text" placeholder="title">
     </input>
+
     <div className="col-span-3">
-        kcal: {totalCalories}
+        kcal-all: {totalCalories} fat-all: {totalFat} protein-all: {totalProtein}
     </div>
     {
     gerichtListe && gerichtListe.length > 0 && gerichtListe.map((singleGericht, index) => (
     <>
     <div className = "col-span-6" key={index}>
-            {singleGericht.name} {singleGericht.calories}
+            {singleGericht.name} {singleGericht.calories} {singleGericht.fat} {singleGericht.protein}
         </div>
         <button onClick={() => {deleteGericht(index)}} className = "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded col-span-2">
             delete
@@ -138,16 +147,28 @@ const getCurrentDate = () => {
     ))
 }
     <input id="gerichtField"
-    className ="col-span-5"
+    className ="col-span-4"
         onChange={(e) => {setGericht(e.target.value), validateButton()}}
         type="text" placeholder="Name">
     </input>
     <input id="kalorienField"
-    className = "col-span-2"
+    className = "col-span-1"
     required
     min = "0"
         onChange={(e) => {setCalories(e.target.value), validateButton()}}
-        type="number" placeholder="calories">
+        type="number" placeholder="kcal">
+    </input>
+    <input id="fatField"
+    className ="col-span-1"
+    min = "0"
+        onChange={(e) => {setFat(e.target.value), validateButton()}}
+        type="number" placeholder="fat">
+    </input>
+    <input id="proteinField"
+    className ="col-span-1"
+    min = "0"
+        onChange={(e) => {setProtein(e.target.value), validateButton()}}
+        type="number" placeholder="protein">
     </input>
     <button disabled = {buttonEnabled}
         onClick={() => {addGericht(), clearFields()}}
@@ -163,10 +184,12 @@ const getCurrentDate = () => {
     </button>
         </div>
     </div>
+    </div>
     </>
 
     )
 }
+
 
     
 export default gerichtForm
