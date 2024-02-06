@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import Navigation from "./Navigation";
+import FAQ from "./FAQ";
+import FaqContent from "./faqContent";
 import { Link } from "react-router-dom";
 
 function gerichtForm() {
@@ -95,6 +98,13 @@ const getCurrentDate = () => {
 
     if(loading) return <div>Is Loading...</div>
     return (
+        <>
+        <div className='h-11'></div>
+        <div>
+        <Navigation />
+        <div className="FAQ-visibility"><FaqContent /></div>
+        </div>
+
     <div className="bg-green-200 flex justify-center items-center h-full">
         <div className="grid grid-cols-8 md:w-1/4 gap-2 w-full md:p-0 p-3">
         <br className="col-span-full"></br>
@@ -145,6 +155,7 @@ const getCurrentDate = () => {
     </button>
         </div>
     </div>
+    </>
 
     )
 }

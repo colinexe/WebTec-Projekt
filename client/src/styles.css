@@ -7,13 +7,14 @@
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 600;
-    color: #ffffff;
+    color: white;
     background-color: #4F46E5;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     width: 5rem;
     max-width: 15rem;
     text-align: center;
 }
+
 
 .buttons-in-detail{
     justify-content: space-evenly;
@@ -91,7 +92,6 @@ body.active-modal {
 
 
 .nav-bar {
-    background: #F1F1F1;
     position: fixed;
     bottom: 0;
     height: 65px;
@@ -104,7 +104,7 @@ body.active-modal {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: black;
+    background: #F1F1F1;
     width: 25%
 }
 
@@ -120,7 +120,16 @@ body.active-modal {
     background-color: rgb(229 231 235);
     border-radius: 0.5rem;
     padding: 0.5rem;
-    margin: 1.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    display: block;
+    text-align: left;
+}
+
+.center-content{
     margin-left: auto;
     margin-right: auto;
     width: 90%;
@@ -133,19 +142,25 @@ body.active-modal {
     background-color: #eee;
     color: #444;
     cursor: pointer;
-    padding: 18px;
-    width: 100%;
+    padding: 0.5rem;
+    width: 95%;
     text-align: left;
     border: none;
     outline: none;
     transition: 0.4s;
+    left: 1;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .accordion:after {
     content: '\02795';
     /* Unicode character for "plus" sign (+) */
     font-size: 13px;
-    color: #777;
+    color: #eee;
     float: right;
     margin-left: 5px;
 }
@@ -153,7 +168,7 @@ body.active-modal {
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active,
 .accordion:hover {
-    background-color: #ccc;
+    background-color: #eee;
 }
 
 /* Style the accordion panel. Note: hidden by default */
@@ -163,3 +178,232 @@ body.active-modal {
     display: none;
     overflow: hidden;
 }
+
+.FAQ-visibility{
+    display: none;
+}
+
+.login-fields{
+    width: 100%;
+    display: block;
+    margin-top: 3%;
+}
+
+#login-button{
+    border-radius: 0.25rem;
+    width: 100%;
+    color: white;
+    background-color: #4F46E5;
+}
+
+#change-login-mode{
+    color: #4F46E5;
+}
+
+.login-widget{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.6;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 300px;
+}
+
+/* For Desktop */
+@media only screen and (min-width: 1200px){
+
+/* Modal */
+body.active-modal {
+    overflow-y: hidden;
+}
+
+.modal,
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.overlay {
+    background: rgba(49, 49, 49, 0.8);
+}
+
+.modal-content {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.6;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 300px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 7px;
+}
+
+/* Navigation */
+
+.nav-bar {
+    
+    height: 30%;
+    bottom: 35%;
+    left: 0px;
+    width: 20%;
+    display: grid;
+    gap: 1rem;
+    margin-left: 5%;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.nav-icon {
+    background: #F1F1F1;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* FAQ Accordion */
+
+.FAQ-visibility{
+    position: fixed;
+    right: 0;
+    width: 20%;
+    display: block;
+    margin-right: 5%;
+    height: 40%;
+    bottom: 30%;
+
+}
+
+.FAQ-button{
+    display: none;
+}
+
+
+
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    display: block;
+    width: 95%;
+    left: 2.5%;
+}
+.accordion:after {
+    content: '\02795';
+    /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 10px;
+    bottom: 50%;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active,
+.accordion:hover {
+    background-color: #eee;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+/* List Display */
+
+.center-content{
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    display: block;
+    text-align: left;
+}
+
+.workout-list-tile {
+    background-color: rgb(229 231 235);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    display: block;
+    text-align: left;
+}
+.workout-detail-macro {
+    width: 40%;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Buttons */
+.buttons-in-detail{
+    justify-content: space-evenly;
+    min-width: 40%;
+    max-width: 40%;
+    display: block;
+}
+.button-normal {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #4F46E5;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+    text-align: center;
+    max-width: 30rem;
+}
+.delete-button {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+
+    border-width: 2px;
+    border-color: red;
+    background-color: white;
+    max-width: 30rem;
+}
+
+
+} 

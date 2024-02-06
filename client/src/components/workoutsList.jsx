@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import React from 'react'
 import { useNavigate } from "react-router-dom";
+import Navigation from "./Navigation";
+import FaqContent from "./faqContent";
 import { Link } from "react-router-dom";
 
 
@@ -33,7 +35,7 @@ function workoutList() {
         const data = await res.text();
         const myObj = JSON.parse(data)
 
-        sleep(1000).then(() => navigateWorkoutDetail(myObj._id))
+        sleep(500).then(() => navigateWorkoutDetail(myObj._id))
 
     }
 
@@ -51,6 +53,12 @@ function workoutList() {
     if (loading) return <div>Is Loading...</div>
     return (
         <>
+        <div className='h-11'></div>
+        <div>
+        <Navigation />
+        <div className="FAQ-visibility"><FaqContent />
+        </div>
+        </div>
             <h1 className="text-2xl font-bold flex justify-center items-center">Workouts</h1>
 
             <button className="workout-list-tile text-center"

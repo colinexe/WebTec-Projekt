@@ -31,6 +31,16 @@ export default defineConfig({
       changeOrigin: true,
       secure: false,
       },
+      "/auth": {
+        target: "http://localhost:10000",
+        changeOrigin: true,
+        secure: false,
+        },
+      "/logout": {
+        target: "http://localhost:10000",
+        changeOrigin: true,
+        secure: false,
+        }
     },
   },
 })

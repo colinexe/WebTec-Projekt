@@ -4,6 +4,11 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const server = express();
 const mongoose = require('mongoose')
+const bcrypt = require("bcrypt")
+const passport = require("passport")
+const LocalStrategy = require("passport-local").Strategy
+const session = require("express-session")
+const MongoStore = require("connect-mongo")
 
 // connecto to mongoDB
 mongoose.connect("mongodb://localhost:27017/Food");
@@ -33,14 +38,61 @@ const GerichtsListeSchema = new mongoose.Schema({
 
 const GerichtsListeData = mongoose.model('Gerichte', GerichtsListeSchema);
 
-
+const sessionConfig = session({
+    secret: "keyboard cat",
+    saveUninitialized: true, // don't create session until something stored //don't save session if unmodified
+    store: MongoStore.create({
+      mongoUrl:  "mongodb://localhost:27017/Food?authSource=admin",
+      collectionName: "user_sessions",
+    }),
+    cookie: {
+        expires: 7200000000
+    }
+  })
 
 
 server.use(express.static(staticPath))
 server.use(express.json())
 server.use(cors())
 server.use(bodyParser.urlencoded({ extended: true }))
+server.use(sessionConfig)
+server.use(passport.initialize())
+server.use(passport.session())
 
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(async (user, done) => {
+const currentUser = await getUserByEmailOrUsername(user.username, "username not valid");
+if(currentUser == null){
+        return done(null, false);
+}
+const { username, email, _id } = currentUser;
+console.log(_id)
+const userData = {
+    auth: true,
+    username: username,
+    email: email,
+    id: _id.toString()
+}
+done(null, userData);
+});
+
+server.get("/auth/checkstatus", (req,res) =>{
+    if(req.isAuthenticated()){
+        return res.json(req.user)
+    } else{
+        return res.json({ auth: req.isAuthenticated() });
+    }
+})
+
+server.get("/logout", async (req, res, next)=>{
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+      });
+})
 
 /*hier werden die einzelnen Objekte in die Datenbank gepackt
 der erweiterte Teil definiert die Zusammensetzung des Objektes*/
@@ -79,7 +131,7 @@ const ExerciseSchema = new mongoose.Schema({
 })
 
 const WorkoutSchema = new mongoose.Schema({
-    //user: String,
+    user_id: String,
     workout_type: String,
     workout_date: Date,
     duration: Number,
@@ -103,7 +155,8 @@ server.post("/workouts/add", async (req, res) =>{
     WorkoutData.create({
         workout_type: "Neues Workout",
         _id: _id,
-        workout_date: workout_date
+        workout_date: workout_date,
+        user_id: req.user.id||"invalid"
     })
 
     let data = {}
@@ -186,10 +239,136 @@ server.post("/workouts/update", async (req, res) => {
 
 
 server.get("/workouts/all", async (req, res)=>{
-    const workouts = await WorkoutData.find().sort({workout_date: -1});
+    const filter = {"user_id": req.user.id}
+    const workouts = await WorkoutData.find(filter).sort({workout_date: -1});
     //console.log(workouts)
     res.send(workouts)
 })
+
+server.get("/workouts/thisDate", async (req, res) => {
+    const date = new Date();
+
+    // Set the start of the day (midnight) for the given date
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    // Set the end of the day (23:59:59.999) for the given date
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const thisWorkout = await WorkoutData.find({
+        "workout_date": {
+            $gte: startOfDay,
+            $lt: endOfDay
+        }, "user_id": req.user.id
+    }).sort({ workout_date: -1 });
+
+    res.send(thisWorkout);
+});
+
+// SignUp
+
+const UserSchema = new mongoose.Schema({
+    username: String,
+    email: String,
+    password: String
+});
+
+const UserData = mongoose.model('User', UserSchema);
+
+
+async function getUserByEmailOrUsername(email, username){
+    try {
+        const user = await UserData.findOne({
+            $or: [{ email: email }, { username: username }]
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return user;
+    } catch (error) {
+        console.error('Fehler bei der Suche nach dem Nutzer:', error);
+        throw error;
+    }
+};
+
+
+async function registerUser(req, res){
+    const{username, email, password} = req.body
+    console.log(req.body)
+    try{
+       var user = await getUserByEmailOrUsername(email, username)
+       console.log(user)
+       if(user === null){
+        const salt = await bcrypt.genSalt(12);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+        console.log(hashedPassword)
+        
+        const account = await insertUser(username, email, hashedPassword)
+        if(account != null){
+            res.redirect("/?register=success")
+        }
+        }
+
+    }catch(error){
+        res.redirect("/?reason="+error)
+        console.log(error)
+    }
+}
+
+async function insertUser(username, email, password) {
+    return new Promise(async (resolve, reject) => {
+       try {
+        
+        const newUser = await UserData.create({username: username, email: email, password: password})
+        console.log(newUser)
+        resolve(newUser);
+    } catch (error) {
+        reject (error);
+    } 
+    })
+    
+}
+
+server.post("/auth/register", registerUser)
+
+passport.use("local", new LocalStrategy(
+    async function(username, password, done) {
+      const user = await UserData.findOne({ username: username })
+
+        if (!user) { return done(null, false); }
+        if (user){
+            const isPasswordMatched = bcrypt.compare(user.password, password)
+            if(!isPasswordMatched){
+                return done(null, false, {message: "1"})
+            } return done(null, user)
+
+        }
+        return done(null, user);
+      })
+    
+);
+
+async function loginUser(req, res, next){
+    passport.authenticate("local", (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.redirect("/");
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            return res.redirect("/Home");
+        });
+    })(req, res, next);
+}
+
+server.post("/auth/login", loginUser)
 
 // Server Functions
 
@@ -207,3 +386,6 @@ server.get('/*', (req , res) => {
 })
 
 server.listen(10000, () => { console.log("Server listening")})
+
+// Login
+
