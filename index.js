@@ -19,15 +19,15 @@ const GerichtSchema = new mongoose.Schema({
     name: String,
     //producer: String,
     calories: Number,
-    /*fat: Number,
-    carbohydrates: Number,
-    protein: Number*/
+    fat: Number,
+    protein: Number
 });
 
 //Ingredient DB
 const GerichtsListeSchema = new mongoose.Schema({
     title: String,
-    list: [GerichtSchema]
+    list: [GerichtSchema],
+    user_id: String
     //producer: String,
     //calories: Number,
     /*fat: Number,
@@ -96,24 +96,24 @@ server.get("/logout", async (req, res, next)=>{
 
 /*hier werden die einzelnen Objekte in die Datenbank gepackt
 der erweiterte Teil definiert die Zusammensetzung des Objektes*/
-server.post("/gerichte/add", (req, res) =>{
-    const { Gericht, calories } = req.body;
+/*server.post("/gerichte/add", (req, res) =>{
+    const { Gericht, calories, fat, protein } = req.body;
     ProductData.create({
         Gericht: Gericht,
         //producer: producer,
-        calories: calories
-        /*fat: fat,
-        carbohydrates: carbohydrates,
-        protein: protein*/
+        calories: calories,
+        fat: fat,
+        protein: protein
     })
     res.send("ok")
-})
+})*/
 
 /*hier werden Objekte auf der Datenbank abgefragt
 es werden hier alle Gerichte abgefragt*/
+
 server.get("/gerichte/all", async (req, res)=>{
-    const gerichte = await GerichtsListeData.find();
-    //console.log(gerichte)
+    const gerichte = await GerichtsListeData.find({"user_id": req.user.id});
+    console.log(gerichte)
      res.send(gerichte)
 })
 
@@ -139,6 +139,8 @@ const WorkoutSchema = new mongoose.Schema({
 })
 
 server.post("/gerichte/liste/add", async (req, res)=>{
+    const  user_id = req.user.id||"invalid"
+    req.body["user_id"]=user_id 
     const data = await GerichtsListeData.create(req.body)
     res.send(200)
 })
