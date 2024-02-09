@@ -17,6 +17,7 @@ const AuthProvider = (props) => {
   
   useEffect(() => {
     const checkAuth = async () => {
+      console.log("test");
       const response = await fetch("/auth/checkstatus"); // Replace with your actual API endpoint
       const user = await response.json();
       console.log(user);
