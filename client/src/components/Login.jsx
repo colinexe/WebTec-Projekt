@@ -7,14 +7,14 @@ import CookieConsent from "react-cookie-consent";
 
 function Login() {
     const [loading, setLoading] = useState(true);
-    const [gerichte, setGerichte] = useState();
+    //const [gerichte, setGerichte] = useState();
     const [Login, setLogin] = useState(true);
 
 
     async function fetchData() {
-        const res = await fetch("/gerichte/all");
-        const data = await res.json();
-        setGerichte(data)
+        //const res = await fetch("/gerichte/all");
+        //const data = await res.json();
+        //setGerichte(data)
         setLoading(false)
     }
 

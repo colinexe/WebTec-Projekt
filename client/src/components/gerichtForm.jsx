@@ -70,20 +70,6 @@ function gerichtForm() {
     }
 
     const addGericht = (e) => {
-
-        /* setGerichte([...gerichte, {Gericht: gericht, calories: calories}])
-         const res = await fetch("/gerichte/add", {
-             method: "POST",
-             headers: {
-                 "Content-Type": "application/json",
-             },
-             body: JSON.stringify({
-                 Gericht: gericht,
-                 calories: calories
-             }),
-             }
-         );
-         */
         setTotalCalories(previous => previous + Number(calories));
         setTotalFat(previous => previous + Number(fat));
         setTotalProtein(previous => previous + Number(protein));
@@ -101,6 +87,7 @@ function gerichtForm() {
 
     const deleteGericht = (index) => {
         const updatedGerichtListe = [...gerichtListe];
+        deleteMahlzeitFromDatabase(deletedMahlzeit.id);
         updatedGerichtListe.splice(index, 1);
         setGerichtListe(updatedGerichtListe);
         console.log("Gericht gelöscht:", index);
@@ -108,6 +95,47 @@ function gerichtForm() {
         setTotalFat(previous => previous - Number(fat));
         setTotalProtein(previous => previous - Number(protein));
     };
+
+    const deleteMahlzeit = async (index, gerichtId) => {
+        try {
+            // Rufe die Backend-API auf, um die Mahlzeit zu löschen
+            await fetch("/gerichte/deleteMahlzeit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ gerichtId }),
+            });
+    
+            const updatedGerichte = [...gerichte];
+            const deletedMahlzeit = updatedGerichte[index];
+            updatedGerichte.splice(index, 1);
+            setGerichte(updatedGerichte);
+            setTotalCalories((previous) => previous - Number(deletedMahlzeit.calories));
+            setTotalFat((previous) => previous - Number(deletedMahlzeit.fat));
+            setTotalProtein((previous) => previous - Number(deletedMahlzeit.protein));
+    
+            console.log("Mahlzeit gelöscht:", index);
+        } catch (error) {
+            console.error("Fehler beim Löschen der Mahlzeit im Frontend:", error);
+        }
+    };
+    
+
+
+
+
+    /*const deleteMahlzeit = (index) => {
+        const updatedGerichte = [...gerichte];
+        const deletedMahlzeit = updatedGerichte[index];
+        updatedGerichte.splice(index, 1);
+        setGerichte(updatedGerichte);
+        setTotalCalories((previous) => previous - Number(deletedMahlzeit.calories));
+        setTotalFat((previous) => previous - Number(deletedMahlzeit.fat));
+        setTotalProtein((previous) => previous - Number(deletedMahlzeit.protein));
+      
+        console.log("Mahlzeit gelöscht:", index);
+      };*/
 
 
     const clearFields = () => {
@@ -147,7 +175,7 @@ function gerichtForm() {
                 <div className="FAQ-visibility"><FaqContent /></div>
             </div>
             <div className="center-content">
-                <div className="bg-green-200 flex justify-center items-center h-full">
+                <div className="rounded bg-gray-200 flex justify-center items-center h-full">
                     <div className="grid grid-cols-8 md:w-1/2 gap-2 w-full md:p-0 p-3">
                         <br className="col-span-full"></br>
                         <div className="flex justify-center col-span-full">{datum}</div>
@@ -222,17 +250,9 @@ function gerichtForm() {
                                 <div>Kalorien:{singleGericht.summeKalorien}</div>
                                 <div>Protein: {singleGericht.summeProtein}</div>
                                 <div>Fett: {singleGericht.summeFett}</div>
-                                </div>
-                                <div>
-                                    {
-    /*singleGericht.list && singleGericht.list.length > 0 && singleGericht.list.map((listItem, index) => (
-    <>
-    <div>
-        {listItem.fat}
-    </div>
-        </>
-    ))
-    */}
+                                <button onClick={() => { deleteMahlzeit(index) }} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded col-span-2">
+                                        delete
+                                    </button>
                                 </div>
                             </div>
                         </>
