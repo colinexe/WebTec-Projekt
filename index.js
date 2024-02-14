@@ -117,6 +117,25 @@ server.get("/gerichte/all", async (req, res)=>{
      res.send(gerichte)
 })
 
+server.post("/gerichte/deleteMahlzeit", async (req, res) => {
+    // Erforderlich: gericht_id (oder wie auch immer Ihre Gerichte eindeutig identifiziert sind)
+    const { gericht_id } = req.body;
+    const filter = { "_id": gericht_id };
+
+    try {
+        // Ihr vorhandener Löschcode für Mahlzeiten
+        await GerichtsListeData.deleteOne(filter);
+
+        console.log("Mahlzeit erfolgreich gelöscht.");
+        // Senden Sie eine Erfolgsantwort an das Frontend oder aktualisieren Sie die Liste auf andere Weise
+        res.status(200).send("Mahlzeit gelöscht");
+    } catch (error) {
+        console.error("Fehler beim Löschen der Mahlzeit:", error);
+        // Senden Sie eine Fehlerantwort an das Frontend
+        res.status(500).send("Interner Serverfehler");
+    }
+});
+
 
 //Exercise DB
 const SetSchema = new mongoose.Schema({
