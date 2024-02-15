@@ -20,6 +20,7 @@ function gerichtForm() {
     const [buttonEnabled, setButtonEnabled] = useState(true);
     const [title, setTitle] = useState();
 
+
 //Hier bitte aktivieren, nur ausgeschaltet wegen Bugs
     async function fetchData() {
         const res = await fetch("/gerichte/all");
@@ -53,7 +54,9 @@ function gerichtForm() {
         };
     }
 
-    const addToDatabase = async () => {
+
+    //Hier werden die Sachen nur in die Datenbank geschrieben, die Eingabefelder aber nicht geleert
+    /*const addToDatabase = async () => {
         console.log("in addToDatabase")
         const res = await fetch("/gerichte/liste/add", {
             method: "POST",
@@ -67,7 +70,38 @@ function gerichtForm() {
         }
         );
         console.log(res.status)
-    }
+    }*/
+
+    //Hier der Versuch mit Leerung der Datenfelder
+    const addToDatabase = async () => {
+        try {
+            const res = await fetch("/gerichte/liste/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: title,
+                    list: gerichtListe,
+                }),
+            });
+    
+            if (res.status === 200) {
+                console.log("Gerichte erfolgreich zur Datenbank hinzugefügt.");
+                setGerichtListe([]);
+                setTotalCalories(0);
+                setTotalFat(0);
+                setTotalProtein(0);
+
+                window.location.reload();
+            } else {
+                console.error("Fehler beim Hinzufügen zur Datenbank:", res.status);
+            }
+        } catch (error) {
+            console.error("Fehler beim Hinzufügen zur Datenbank:", error);
+        }
+    };
+    
 
     const addGericht = (e) => {
         setTotalCalories(previous => previous + Number(calories));
@@ -98,13 +132,14 @@ function gerichtForm() {
 
     const deleteMahlzeit = async (index, gerichtId) => {
         try {
+            console.log("gerichtID:", gerichtId);
             // Rufe die Backend-API auf, um die Mahlzeit zu löschen
             await fetch("/gerichte/deleteMahlzeit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ gerichtId }),
+                body: JSON.stringify({ gericht_id: gerichtId }),
             });
     
             const updatedGerichte = [...gerichte];
@@ -242,7 +277,7 @@ function gerichtForm() {
                                 <div>Kalorien:{singleGericht.summeKalorien}</div>
                                 <div>Protein: {singleGericht.summeProtein}</div>
                                 <div>Fett: {singleGericht.summeFett}</div>
-                                <button onClick={() => { deleteMahlzeit(index) }} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded col-span-2">
+                                <button onClick={() => { deleteMahlzeit(index, singleGericht._id) }} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded col-span-2">
                                         delete
                                     </button>
                                 </div>
