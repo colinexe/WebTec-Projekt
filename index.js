@@ -27,7 +27,8 @@ const GerichtSchema = new mongoose.Schema({
 const GerichtsListeSchema = new mongoose.Schema({
     title: String,
     list: [GerichtSchema],
-    user_id: String
+    user_id: String,
+    date: Date
     //producer: String,
     //calories: Number,
     /*fat: Number,
@@ -118,20 +119,16 @@ server.get("/gerichte/all", async (req, res)=>{
 })
 
 server.post("/gerichte/deleteMahlzeit", async (req, res) => {
-    // Erforderlich: gericht_id (oder wie auch immer Ihre Gerichte eindeutig identifiziert sind)
+    // Erforderlich: gericht_id
     const { gericht_id } = req.body;
     const filter = { "_id": gericht_id };
 
     try {
-        // Ihr vorhandener Löschcode für Mahlzeiten
         await GerichtsListeData.deleteOne(filter);
-
         console.log("Mahlzeit erfolgreich gelöscht.");
-        // Senden Sie eine Erfolgsantwort an das Frontend oder aktualisieren Sie die Liste auf andere Weise
         res.status(200).send("Mahlzeit gelöscht");
     } catch (error) {
         console.error("Fehler beim Löschen der Mahlzeit:", error);
-        // Senden Sie eine Fehlerantwort an das Frontend
         res.status(500).send("Interner Serverfehler");
     }
 });
@@ -160,7 +157,9 @@ const WorkoutSchema = new mongoose.Schema({
 server.post("/gerichte/liste/add", async (req, res)=>{
     const  user_id = req.user.id||"invalid"
     req.body["user_id"]=user_id 
-    const data = await GerichtsListeData.create(req.body)
+    const { ... date } = req.body;
+    const data = await GerichtsListeData.create({ ... date });
+//    const data = await GerichtsListeData.create(req.body)
     res.send(200)
 })
 

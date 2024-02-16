@@ -4,6 +4,7 @@ import Navigation from "./Navigation";
 import FAQ from "./FAQ";
 import FaqContent from "./faqContent";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 function gerichtForm() {
     const [gericht, setGericht] = useState();
@@ -19,6 +20,7 @@ function gerichtForm() {
     const [totalCalories, setTotalCalories] = useState(0);
     const [buttonEnabled, setButtonEnabled] = useState(true);
     const [title, setTitle] = useState();
+    const [selectedDate, setselectedDate] = useState(new Date().toISOString().split("T")[0]);
 
 
 //Hier bitte aktivieren, nur ausgeschaltet wegen Bugs
@@ -72,9 +74,9 @@ function gerichtForm() {
         console.log(res.status)
     }*/
 
-    //Hier der Versuch mit Leerung der Datenfelder
     const addToDatabase = async () => {
         try {
+            console.log("Datum vor dem Hinzufügen zur Datenbank:", datum);
             const res = await fetch("/gerichte/liste/add", {
                 method: "POST",
                 headers: {
@@ -82,6 +84,7 @@ function gerichtForm() {
                 },
                 body: JSON.stringify({
                     title: title,
+                    date: datum,
                     list: gerichtListe,
                 }),
             });
@@ -121,7 +124,6 @@ function gerichtForm() {
 
     const deleteGericht = (index) => {
         const updatedGerichtListe = [...gerichtListe];
-        deleteMahlzeitFromDatabase(deletedMahlzeit.id);
         updatedGerichtListe.splice(index, 1);
         setGerichtListe(updatedGerichtListe);
         console.log("Gericht gelöscht:", index);
@@ -183,12 +185,21 @@ function gerichtForm() {
         setCalories(undefined)
     }
 
-    const getCurrentDate = () => {
+    /*const getCurrentDate = () => {
         const date = new Date()
-        const stringdate = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
-        setDatum(stringdate)
+        const stringdate = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+        setDatum(stringdate);
+    }*/
+
+    const getCurrentDate = () => {
+        const date = new Date();
+        const formattedDate = format(date, 'yyyy-MM-dd');
+        setDatum(formattedDate);
     }
+
     useEffect(() => {
+        const date = new Date().toISOString().split("T")[0];
+        console.log(date)
         getCurrentDate();
         fetchData();
     }, [])
@@ -213,9 +224,15 @@ function gerichtForm() {
                 <div className="rounded bg-gray-200 flex justify-center items-center h-full">
                     <div className="grid grid-cols-8 md:w-1/2 gap-2 w-full md:p-0 p-3">
                         <br className="col-span-full"></br>
-                        <div className="flex justify-center col-span-full">{datum}</div>
+                        <input
+                            className="w-9/12 col-span-full"
+                            type="date"
+                            value={datum}
+                            onChange={(e) => setDatum(e.target.value)}
+                        />
+                        <br></br>
                         <input id="titleField"
-                            className="col-span-5"
+                            className="col-span-4"
                             onChange={(e) => setTitle(e.target.value)}
                             type="text" placeholder="Mahlzeit">
                         </input>
@@ -275,7 +292,7 @@ function gerichtForm() {
                     </div>
                 </div>
                 {
-                    gerichte && gerichte.length > 0 && gerichte.map((singleGericht, index) => (
+                    gerichte && gerichte.length > 0 && gerichte.filter(element=>element.date.startsWith(datum.split("T")[0])).map((singleGericht, index) => (
                         <>
                             <div className="w-full bg-gray-200 h-fit flex flex-col rounded-lg mt-2 mb-5" key={index}>
                                 <div className="ml-2 font-bold text-xl">
@@ -299,6 +316,7 @@ function gerichtForm() {
     )
 }
 
+//element=>element.date.toISOString().slice(0, 10) === selectedDate.toISOString().slice(0, 10)
 
 
 export default gerichtForm
