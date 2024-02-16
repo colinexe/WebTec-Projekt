@@ -35,7 +35,7 @@ function Login() {
                 buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
                 expires={150}
             >
-                Diese Website nutzt essenzielle Cookies, um eine einwandfreie Funktion der Website zu ermöglichen.{" "}
+                Diese Website nutzt nur essenzielle Cookies, um eine einwandfreie Funktion der Website zu ermöglichen.{" "}
                 
             </CookieConsent>
             <div className="login-widget">
@@ -52,11 +52,11 @@ function Login() {
                             className="login-fields"></input>
                     </p>
                     <p>
-                        <button type="Submit" className="login-fields" id="login-button">Anmelden</button>
+                        <button type="Submit" className="login-fields button-normal" id="login-button">Anmelden</button>
                     </p>
                 </form>
                 <p className="text-xs">
-                    <button id="change-login-mode" onClick={() => { setLogin(!Login) }}>Konto erstellen</button>
+                    <button id="change-login-mode" onClick={() => { setLogin(!Login)}}>Konto erstellen</button>
                 </p>
             </div>
         </>

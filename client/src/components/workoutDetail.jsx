@@ -230,7 +230,15 @@ function workoutDetail(elem) {
         fetchData();
     }, [])
 
-    if (loading) return <div>Is Loading...</div>
+    if (loading) return (
+        <div>
+            <div>Is Loading...</div>
+            <div>
+            <Navigation />
+            <div className="FAQ-visibility"><FaqContent /></div>
+            </div>
+        </div>
+        )
     return (
         <>
             <div className='h-11'></div>
@@ -242,8 +250,8 @@ function workoutDetail(elem) {
                 <div className="">
                     <div className="workout-detail-macro">
                         <div>
-                            <h1 className="text-2xl font-bold flex justify-center items-center">
-                                <input className="bg-white w-10/12 text-center border-b-2" value={myWorkout.workout_type}
+                            <h1 className="header1 flex justify-center items-center">
+                                <input className="w-10/12 text-center header-input" value={myWorkout.workout_type}
                                     onChange={(e) => updateWorkoutName(e.target.value)}></input>
                             </h1>
                         </div>
@@ -253,9 +261,9 @@ function workoutDetail(elem) {
                                     onChange={(e) => updateWorkoutDate(e.target.value)}></input>
                             </span>
                             <span className="flex items-center justify-center">
-                                <input className="w-6/12" type="number" value={myWorkout.duration}
+                                <input className="w-6/12" type="number" placeholder="60" value={myWorkout.duration}
                                     onChange={(e) => updateWorkoutDuration(e.target.value)}></input>
-                                &nbsp; mins
+                                <span className="p p-color">&nbsp; mins</span>
                             </span>
 
                         </div>
@@ -266,11 +274,13 @@ function workoutDetail(elem) {
                         return (
                             <div key={ind} className="workout-list-tile">
                                 <div className="flex flex-row">
-                                    <span className="text-lg font-bold basis-1/2">{el_of_exercise.exercise_name}&nbsp;&nbsp;</span>
+                                    <span className="header2 basis-1/2 p">{el_of_exercise.exercise_name}&nbsp;&nbsp;</span>
                                     <span className="basis-1/2 flex justify-end">
-                                        <button className="button-normal"
+                                        <button className=""
                                             onClick={() => { toggleModal(el_of_exercise._id), console.log(el_of_exercise) }}>
-                                            Edit
+                                            <div className="flex">
+                                            <span class="material-icons button-color">edit</span>
+                                            <span className="p button-color">Edit</span></div>
                                         </button>
                                     </span>
                                 </div>
@@ -283,50 +293,54 @@ function workoutDetail(elem) {
                                             <div className="text-lg font-semibold">
 
 
-                                                <h2>Edit Exercise</h2>
+                                                <h2 className="header3">Edit Exercise</h2>
                                             </div>
                                             <div>
                                                 <input type="text" defaultValue={el_of_exercise.exercise_name}
                                                     onChange={(e) => updateExerciseName(e.target.value, ind)}></input>
                                             </div>
 
-                                            <div id="set-input-lines">
-
+                                            <div id="set-input-lines" className="">
+                                            <div className="flex flex-col ">
                                                 {el_of_exercise.set.map((el_of_set, index_of_set) =>
-                                                    <div key={index_of_set} id={el_of_set._id}>
-                                                        <span className=" w-12">Set {index_of_set + 1}:&nbsp;</span>
+                                                
+                                                    <div key={index_of_set} id={el_of_set._id} className="modal-line">
+                                                        
+                                                        <span className="modal-line-tag w-14 p p-color">Set {index_of_set + 1}:&nbsp;</span>
 
-                                                        <input size="3" type="number" className="leading-snug" value={el_of_set.set_repetition}
+                                                        <input size="3" type="number" className="leading-snug modal-line-tag" value={el_of_set.set_repetition}
                                                             onChange={(e) => updateSetRepetition(e.target.value, ind, index_of_set)}></input>
-                                                        &nbsp;X&nbsp;
-                                                        <input size="3" type="number" className="leading-snug" value={el_of_set.set_weight}
+                                                        <span className="modal-line-tag p p-color">&nbsp;X&nbsp;</span>
+                                                        <input size="3" type="number" className="leading-snug modal-line-tag" value={el_of_set.set_weight}
                                                             onChange={(e) => updateSetWeight(e.target.value, ind, index_of_set)}></input>
-                                                        &nbsp;kg &nbsp;
+                                                        <span className="modal-line-tag p p-color">&nbsp;kg &nbsp;</span>
 
-                                                        <button className="btn-modal rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                        <button className="modal-line-tag"
                                                             onClick={() => { deleteSetFE(ind, index_of_set) }}>
-                                                            Delete Set
+                                                            <span className="material-icons">delete</span>
                                                         </button>
 
 
                                                     </div>
                                                 )}
+                                                
 
-                                                <div>
+                                                <div className="modal-line">
                                                     {/* Modal letztes Set das noch "leer" ist*/}
 
 
-                                                    <input size="3" type="number" className="leading-snug ml-11" id={"newSetRepetitionField" + ind}
+                                                    <input size="3" type="number" className="leading-snug modal-line-tag ml-14" id={"newSetRepetitionField" + ind}
                                                         onChange={(e) => setNewSetRepetition(e.target.value)}>
                                                     </input>
-                                                    &nbsp;X&nbsp;
-                                                    <input size="3" type="number" className="leading-snug" id={"newSetWeightField" + ind}
+                                                    <span className="modal-line-tag p p-color">&nbsp;X&nbsp;</span>
+                                                    <input size="3" type="number" className="leading-snug modal-line-tag" id={"newSetWeightField" + ind}
                                                         onChange={(e) => setNewSetWeight(e.target.value)}></input>
-                                                    &nbsp;kg&nbsp;
+                                                    <span className="modal-line-tag p p-color">&nbsp;kg &nbsp;</span>
                                                     <button onClick={() => { addSetFE(ind), clearFields(ind) }}>
-                                                        + Add Set
+                                                        <span className="material-icons modal-line-tag">add</span>
                                                     </button>
 
+                                                </div>
                                                 </div>
                                                 <div className="flex justify-end mt-2 gap-1">
 
@@ -354,7 +368,7 @@ function workoutDetail(elem) {
                                     {el_of_exercise.set.map((el_of_set, index_of_set) => {
                                         // Sets in Workout Übersicht (nicht Modal)
                                         return (
-                                            <div key={index_of_set} className="indent-4">
+                                            <div key={index_of_set} className="indent-4 p p-color">
                                                 <p>Set {index_of_set + 1}: {el_of_set.set_repetition} x {el_of_set.set_weight} kg</p>
 
                                             </div>)
@@ -368,18 +382,18 @@ function workoutDetail(elem) {
 
 
 
-                    <button className="workout-list-tile text-center" onClick={() => { addExerciseFE("Neue Übung") }}>+ Exercise</button>
+                    <button className="workout-list-tile text-center p p-color" onClick={() => { addExerciseFE("Neue Übung") }}>+ Exercise</button>
 
 
                 </div>
-                <div className="flex justify-evenly ">
-                    <div className="buttons-in-detail flex gap-1">
-                        <button className="delete-button  basis-1/2"
-                            onClick={() => { deleteWorkout(myWorkout), navigate(-1) }}>Delete Workout</button>
-                        <button className="button-normal  basis-1/2"
+                
+                        <button className="center-content button-normal"
                             onClick={() => { saveExerciseChanges(myWorkout) }}>Save Workout</button>
-                    </div>
-                </div>
+                        <button className="delete-button  center-content"
+                            onClick={() => { deleteWorkout(myWorkout), navigate(-1) }}>Delete Workout</button>
+                  
+                 <div className='h-20'></div>     
+                    
 
 
             

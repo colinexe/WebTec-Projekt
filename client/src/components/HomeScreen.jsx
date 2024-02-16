@@ -28,40 +28,49 @@ function HomeScreen() {
         fetchData();
     }, [])
 
-    if (loading) return <div>Is Loading...</div>
+    if (loading) return (
+    <div>
+        <div>Is Loading...</div>
+        <div>
+        <Navigation />
+        <div className="FAQ-visibility"><FaqContent /></div>
+        </div>
+    </div>
+    )
     return (
         <>
+            
             <div className='h-11'></div>
             <div>
                 <Navigation />
                 <div className="FAQ-visibility"><FaqContent />
                 </div>
             </div>
-            <h1 className="text-2xl font-bold flex justify-center items-center">Heute</h1>
+            <p className="header1 flex justify-center items-center">Heute</p>
             <div>
-                <p className="center-content text-xl font-bold">Today's Workouts</p>
+                <p className="center-content header2">Today's Workouts</p>
                 {
                     today_workout.length === 0 ? (
                         <p className="workout-list-tile text-center text-gray-400">Keine Daten gefunden</p>
                     ) : (
                         today_workout.map((el_of_workout, index) => (
                             <button key={index} className="workout-list-tile" onClick={() => navigateWorkoutDetail(el_of_workout._id)}>
-                                <p className="text-xl font-bold">
+                                <p className="header2">
                                     {el_of_workout.workout_type}
                                     &nbsp;
                                     {String(el_of_workout.workout_date).substring(0, 10)}
                                 </p>
-                                <p>Exercises: {el_of_workout.exercise.length}</p>
-                                <p>Dauer: {el_of_workout.duration} min</p>
+                                <p className="p p-color">Exercises: {el_of_workout.exercise.length}</p>
+                                <p className="p p-color">Dauer: {el_of_workout.duration} min</p>
                             </button>
                         ))
                     )
                 }
             </div>
             <div>
-                <h2 className="center-content text-xl font-bold">Daily Journal</h2>
+                <p className="center-content header2">Daily Journal</p>
                 <form>
-                    <textarea className="workout-list-tile" defaultValue={"Daily Journal"}></textarea>
+                    <textarea className="workout-list-tile p p-color" defaultValue={"Daily Journal"}></textarea>
                 </form>
             </div>
         </>

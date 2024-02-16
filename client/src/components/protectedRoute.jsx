@@ -4,11 +4,7 @@ import { useAuth } from './authContext';
 
 const ProtectedWrapper = ({ authElement, altElement }) => {
   const { isAuthenticated } = useAuth();
-
- /* if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
-  } */
-  console.log("Test")
+  console.log(authElement)
   if(isAuthenticated){
     console.log("ist authentiziert")
     return authElement;
@@ -18,5 +14,4 @@ const ProtectedWrapper = ({ authElement, altElement }) => {
     return altElement;
   }
 };
-
 export default ProtectedWrapper;
