@@ -8,7 +8,6 @@ import { format } from "date-fns";
 
 function gerichtForm() {
     const [gericht, setGericht] = useState();
-    const [gericht, setGericht] = useState();
     const [calories, setCalories] = useState();
     const [fat, setFat] = useState();
     const [totalFat, setTotalFat] = useState(0);

@@ -20,9 +20,7 @@ const GerichtSchema = new mongoose.Schema({
     //producer: String,
     calories: Number,
     fat: Number,
-    protein: Number
-    fat: Number,
-    protein: Number
+    protein: Number,
 });
 
 //Ingredient DB
