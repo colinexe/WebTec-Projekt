@@ -96,7 +96,15 @@ const getCurrentDate = () => {
         fetchData();
     },[])
 
-    if(loading) return <div>Is Loading...</div>
+    if (loading) return (
+        <div>
+            <div>Is Loading...</div>
+            <div>
+            <Navigation />
+            <div className="FAQ-visibility"><FaqContent /></div>
+            </div>
+        </div>
+        )
     return (
         <>
         <div className='h-11'></div>

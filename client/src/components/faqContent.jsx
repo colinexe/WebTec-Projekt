@@ -28,10 +28,11 @@ function faqContent() {
             <div className="accordion-menu">
                 {menuItems.map((item, index) => (
                     <div key={index} className={`accordion-item ${activeIndex === index ? 'active' : ''}`}>
-                        <button className="accordion-title accordion" onClick={() => handleAccordionClick(index)}>
-                            {item.title}
+                        <button className="accordion-title accordion flex" onClick={() => handleAccordionClick(index)}>
+                            <span className="header3 font-semibold flex-1">{item.title}</span>
+                            <span className="material-icons flex-none button-color">expand_more</span>
                         </button>
-                        <div className="accordion-content panel" style={{ display: activeIndex === index ? 'block' : 'none' }}>
+                        <div className="accordion-content panel p p-color" style={{ display: activeIndex === index ? 'block' : 'none' }}>
                             <p>{item.content}</p>
                         </div>
                     </div>

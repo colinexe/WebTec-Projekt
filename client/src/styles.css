@@ -1,20 +1,90 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+:root {
+    --text-white: #f8f6f6;
+    --text-black: black;
+    --button-blue: #40c6d6;
+    --background: #231c1c;
+    --modal: #633f3f;
+    --tiles: #3c2121;
+    --nav: #221F1F;
+    --nav-icon: #090606;
+}
+
+
+.material-icons {
+    color: var(--text-white)
+}
+
+.button-color {
+    color: var(--button-blue)
+}
+
+body {
+    background-color: var(--background)
+}
+
+.header-input {
+    background-color : var(--background);
+    box-shadow: 0px 1px var(--text-white);
+    margin-bottom: 5px;
+}
+
+.p {
+    line-height: 24px;
+    font-size: 18px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.p-color{
+    color: var(--text-white)
+}
+
+.header1{
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text-white)
+}
+.header2{
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-white)
+}
+.header3{
+    font-size: 20px;
+    color: var(--text-white)
+}
+
+.only-mobile{
+    display: block;
+}
+.only-desktop{
+    display: none;
+}
+
 .button-normal {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     border-radius: 0.25rem;
-    font-size: 0.75rem;
+    font-size: 14px;
     line-height: 1rem;
     font-weight: 600;
-    color: white;
-    background-color: #4F46E5;
+    color: var(--text-black);
+    background-color: var(--button-blue);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     width: 5rem;
-    max-width: 15rem;
+    max-width: 100%;
     text-align: center;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
 }
 
+.icon-width {
+    max-width: 48px;
+    min-width: 48px;
+}
 
 .buttons-in-detail{
     justify-content: space-evenly;
@@ -29,15 +99,17 @@
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     border-radius: 0.25rem;
-    font-size: 0.75rem;
+    font-size: 14px;
     line-height: 1rem;
     font-weight: 600;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     width: 5rem;
-    max-width: 15rem;
+    max-width: 100%;
     border-width: 2px;
     border-color: red;
     background-color: white;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .delete-button:hover {
@@ -46,7 +118,7 @@
 }
 
 .button-normal:hover {
-    background-color: #6366F1;
+    background-color: var(--button-blue);
 }
 
 
@@ -69,15 +141,29 @@ body.active-modal {
     background: rgba(49, 49, 49, 0.8);
 }
 
+.modal-line {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    line-height: 24px;
+    height: 24px;
+}
+
+.modal-line-tag{
+    line-height: 24px;
+    display: inline-block;
+    justify-self: center;
+    vertical-align: middle;
+}
+
 .modal-content {
     position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.6;
-    background: #f1f1f1;
+    background: var(--modal);
     padding: 14px 28px;
-    border-radius: 3px;
+    border-radius: 0.5rem;
     max-width: 600px;
     min-width: 300px;
 }
@@ -92,9 +178,11 @@ body.active-modal {
 
 
 .nav-bar {
+
+    box-shadow: 0px -2px var(--nav);
     position: fixed;
     bottom: 0;
-    height: 65px;
+    height: 60px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -102,10 +190,27 @@ body.active-modal {
 
 .nav-icon {
     display: flex;
+    line-height: 10px;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #F1F1F1;
+    background: var(--nav-icon);
     width: 25%
+}
+
+.nav-icon:hover{
+    background-color: var(--nav);
+}
+
+.nav-logout-desktop{
+    display: none;
+}
+
+.nav-logout-mobile{
+    display: block;
+    bottom: 40px;
+    position: relative;
+    line-height: 5px;
 }
 
 .workout-detail-macro {
@@ -117,16 +222,17 @@ body.active-modal {
 }
 
 .workout-list-tile {
-    background-color: rgb(229 231 235);
+    background-color: var(--tiles);
     border-radius: 0.5rem;
     padding: 0.5rem;
-    margin-top: 0.5rem;
-    margin-bottom: 1.25rem;
+    margin-top: 5%;
+    margin-bottom: 5%;
     margin-left: auto;
     margin-right: auto;
     width: 90%;
     display: block;
     text-align: left;
+    
 }
 
 .center-content{
@@ -134,13 +240,11 @@ body.active-modal {
     margin-right: auto;
     width: 90%;
     display: block;
-    text-align: left;
 }
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-    background-color: #eee;
-    color: #444;
+    background-color: var(--tiles);
     cursor: pointer;
     padding: 0.5rem;
     width: 95%;
@@ -149,34 +253,36 @@ body.active-modal {
     outline: none;
     transition: 0.4s;
     left: 1;
-    margin-top: 1%;
-    margin-bottom: 1%;
+    margin-top: 5%;
+    margin-bottom: 5%;
     margin-left: auto;
     margin-right: auto;
     display: block;
+    border-radius: 1rem;
 }
 
-.accordion:after {
-    content: '\02795';
-    /* Unicode character for "plus" sign (+) */
-    font-size: 13px;
-    color: #eee;
-    float: right;
-    margin-left: 5px;
+.accordion-content {
+    border-radius: 1rem;
 }
+
+
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active,
 .accordion:hover {
-    background-color: #eee;
+    background-color: var(--tiles);
+    border-radius: 1rem;
 }
 
 /* Style the accordion panel. Note: hidden by default */
 .panel {
-    padding: 0 18px;
-    background-color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 0.5rem;
+    background-color: var(--tiles);
     display: none;
     overflow: hidden;
+    border-radius: 1rem;
 }
 
 .FAQ-visibility{
@@ -192,12 +298,12 @@ body.active-modal {
 #login-button{
     border-radius: 0.25rem;
     width: 100%;
-    color: white;
-    background-color: #4F46E5;
+    color: var(--text-black);
+    background-color: var(--button-blue);
 }
 
 #change-login-mode{
-    color: #4F46E5;
+    color: var(--button-blue);
 }
 
 .login-widget{
@@ -206,7 +312,7 @@ body.active-modal {
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.6;
-    background: #f1f1f1;
+    background: var(--modal);
     padding: 14px 28px;
     border-radius: 3px;
     max-width: 600px;
@@ -215,6 +321,14 @@ body.active-modal {
 
 /* For Desktop */
 @media only screen and (min-width: 1200px){
+
+    .only-mobile{
+        display: none;
+    }
+    
+    .only-desktop{
+        display: block;
+    }
 
 /* Modal */
 body.active-modal {
@@ -242,7 +356,6 @@ body.active-modal {
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1.6;
-    background: #f1f1f1;
     padding: 14px 28px;
     border-radius: 3px;
     max-width: 600px;
@@ -259,9 +372,9 @@ body.active-modal {
 /* Navigation */
 
 .nav-bar {
-    
-    height: 30%;
-    bottom: 35%;
+    box-shadow: none;
+    height: 40%;
+    top: 10%;
     left: 0px;
     width: 20%;
     display: grid;
@@ -271,10 +384,43 @@ body.active-modal {
 }
 
 .nav-icon {
-    background: #F1F1F1;
+    gap: 1rem;
+    border-color: #221F1F;
+    border-width: 2px;
+    flex-direction: row;
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: bold;
+    border-radius: 1.5rem;
+    line-height: 24px;
+    padding-left: 10%;
+    justify-content: flex-start;
+    min-height: 112px;
+}
+
+.nav-logout {
+    flex-direction: row;
+    line-height: 24px;
+    width: 100%;
+    
+    font-size: 24px;
+    font-weight: bold; 
+    display: block;
+    text-align: center;
+    gap: 5rem;
+
+}
+.nav-logout-desktop{
+    display: block;
+}
+.nav-logout-mobile{
+    display: none;
+}
+.nav-text{
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+
 }
 
 /* FAQ Accordion */
@@ -286,7 +432,7 @@ body.active-modal {
     display: block;
     margin-right: 5%;
     height: 40%;
-    bottom: 30%;
+    top: 10%
 
 }
 
@@ -297,8 +443,6 @@ body.active-modal {
 
 
 .accordion {
-    background-color: #eee;
-    color: #444;
     cursor: pointer;
     padding: 18px;
     text-align: left;
@@ -309,26 +453,13 @@ body.active-modal {
     width: 95%;
     left: 2.5%;
 }
-.accordion:after {
-    content: '\02795';
-    /* Unicode character for "plus" sign (+) */
-    font-size: 13px;
-    color: #777;
-    float: right;
-    margin-left: 10px;
-    bottom: 50%;
-}
+
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active,
-.accordion:hover {
-    background-color: #eee;
-}
+
 
 /* Style the accordion panel. Note: hidden by default */
 .panel {
-    padding: 0 18px;
-    background-color: white;
     display: none;
     overflow: hidden;
 }
@@ -341,20 +472,14 @@ body.active-modal {
     margin-right: auto;
     width: 40%;
     display: block;
-    text-align: left;
 }
 
 .workout-list-tile {
-    background-color: rgb(229 231 235);
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    margin-bottom: 1.25rem;
-    margin-left: auto;
-    margin-right: auto;
     width: 40%;
     display: block;
     text-align: left;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
 }
 .workout-detail-macro {
     width: 40%;
@@ -371,39 +496,9 @@ body.active-modal {
     max-width: 40%;
     display: block;
 }
-.button-normal {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 600;
-    color: #ffffff;
-    background-color: #4F46E5;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-
-    text-align: center;
-    max-width: 30rem;
-}
-.delete-button {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 600;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
 
-    border-width: 2px;
-    border-color: red;
-    background-color: white;
-    max-width: 30rem;
-}
+
 
 
 } 

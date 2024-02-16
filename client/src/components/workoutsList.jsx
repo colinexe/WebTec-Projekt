@@ -50,7 +50,15 @@ function workoutList() {
         fetchData();
     }, [])
 
-    if (loading) return <div>Is Loading...</div>
+    if (loading) return (
+        <div>
+            <div>Is Loading...</div>
+            <div>
+            <Navigation />
+            <div className="FAQ-visibility"><FaqContent /></div>
+            </div>
+        </div>
+        )
     return (
         <>
         <div className='h-11'></div>
@@ -59,9 +67,9 @@ function workoutList() {
         <div className="FAQ-visibility"><FaqContent />
         </div>
         </div>
-            <h1 className="text-2xl font-bold flex justify-center items-center">Workouts</h1>
+            <p className="header1 flex justify-center items-center">Workouts</p>
 
-            <button className="workout-list-tile text-center"
+            <button className="workout-list-tile text-center p p-color"
                 onClick={() => { addWorkout() }}>
                 + New Workout
             </button>
@@ -74,13 +82,13 @@ function workoutList() {
                             onClick={() => navigateWorkoutDetail(el_of_workout._id)}
                         >
 
-                            <p className="text-xl font-bold">
+                            <p className="header2">
                                 {el_of_workout.workout_type}
                                 &nbsp;
                                 {String(el_of_workout.workout_date).substring(0, 10)}
                             </p>
-                            <p>Exercises: {el_of_workout.exercise.length}</p>
-                            <p>Dauer: {el_of_workout.duration} min</p>
+                            <p className="p p-color">Exercises: {el_of_workout.exercise.length}</p>
+                            <p className="p p-color">Dauer: {el_of_workout.duration} min</p>
                             <div>
                             </div>
                         </button>

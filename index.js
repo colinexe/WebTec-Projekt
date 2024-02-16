@@ -221,17 +221,10 @@ server.post("/workouts/deleteSet", async (req, res) => {
 })
 
 server.post("/workouts/update", async (req, res) => {
-    //Require workout ID, exercise index, set index, setweight/setreps and value
-    console.log("Hallo BE")
-    
     var testdata = req.body
-    const filter = {"_id": testdata.myworkout._id}
-    
+    const filter = {"_id": testdata.myworkout._id}   
     await WorkoutData.findOneAndUpdate(filter, {$set: testdata.myworkout})
-    console.log("Update Finished in BE")
-
     let data = {}
-
     data = await WorkoutData.findOne({"_id": testdata.myworkout._id});
 
     res.send(data)
@@ -322,7 +315,7 @@ async function insertUser(username, email, password) {
     return new Promise(async (resolve, reject) => {
        try {
         
-        const newUser = await UserData.create({username: username, email: email, password: password})
+        const newUser = await UserData.create({username: username, email: username, password: password})
         console.log(newUser)
         resolve(newUser);
     } catch (error) {
@@ -337,14 +330,15 @@ server.post("/auth/register", registerUser)
 passport.use("local", new LocalStrategy(
     async function(username, password, done) {
       const user = await UserData.findOne({ username: username })
-
+        
         if (!user) { return done(null, false); }
         if (user){
             const isPasswordMatched = bcrypt.compare(user.password, password)
             if(!isPasswordMatched){
                 return done(null, false, {message: "1"})
-            } return done(null, user)
-
+            } console.log(user) 
+            return done(null, user)
+            
         }
         return done(null, user);
       })
@@ -353,16 +347,23 @@ passport.use("local", new LocalStrategy(
 
 async function loginUser(req, res, next){
     passport.authenticate("local", (err, user, info) => {
+        console.log("here in loginUser")
+        console.log(user)
         if (err) {
+            console.log("1")
             return next(err);
         }
         if (!user) {
+            console.log("2")
             return res.redirect("/");
         }
         req.logIn(user, (err) => {
             if (err) {
+                console.log("3")
                 return next(err);
             }
+            console.log("4")
+            
             return res.redirect("/Home");
         });
     })(req, res, next);

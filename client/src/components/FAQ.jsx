@@ -13,7 +13,7 @@ function FAQ() {
             <div className='h-11'></div>
             
             <div><Navigation /></div>
-            <h1 className="text-2xl font-bold flex justify-center items-center">FAQ</h1>
+            <h1 className="flex justify-center items-center header1">FAQ</h1>
             <div><FaqContent /></div>
       
             

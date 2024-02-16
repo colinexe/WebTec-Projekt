@@ -50,7 +50,7 @@ function SignUp({RegisterHandler}) {
         <button type="Submit" className="login-fields" id="login-button">Registrieren</button>
         
     </form> 
-    <p className="text-xs">Du hast ein Konto? &nbsp;
+    <p className="text-xs p-color">Du hast ein Konto? &nbsp;
     <button onClick={RegisterHandler} id="change-login-mode">Melde dich an</button>
     </p>
     </div>
