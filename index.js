@@ -21,12 +21,15 @@ const GerichtSchema = new mongoose.Schema({
     calories: Number,
     fat: Number,
     protein: Number
+    fat: Number,
+    protein: Number
 });
 
 //Ingredient DB
 const GerichtsListeSchema = new mongoose.Schema({
     title: String,
     list: [GerichtSchema],
+    user_id: String,
     user_id: String,
     date: Date
     //producer: String,
