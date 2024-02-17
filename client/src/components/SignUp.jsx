@@ -7,14 +7,12 @@ import CookieConsent from "react-cookie-consent";
 function SignUp({RegisterHandler}) {
     const [loading,setLoading] = useState(true)
     const [gerichte, setGerichte] = useState();
+    const [workouts, setWorkouts] = useState()
     const [email, setEmail] = useState();
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
 
     async function fetchData(){
-        const res = await fetch("/gerichte/all");
-        const data = await res.json();
-        setGerichte(data)
         setLoading(false)
     }
 
