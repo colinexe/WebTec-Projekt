@@ -9,6 +9,43 @@ import { Link } from "react-router-dom";
 function HomeScreen() {
     const [loading, setLoading] = useState(true)
     const [today_workout, setTodayWorkout] = useState()
+    const [today_journal, setTodayJournal] = useState()
+    const [default_journal, setDefaultJournal] = useState()
+    const [content, setContent] = useState()
+
+    
+    const updateJournalContent = (update) => {
+        const updatedJournalContent = today_journal
+        updatedJournalContent[0].content= update
+        setTodayJournal(updatedJournalContent)
+    }
+
+    const saveJournal = async (e) => {
+        if(today_journal.length === 0){
+            const res = await fetch("/journals/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                content: content,
+            })  
+            }
+            );
+        }
+        else{
+            const res = await fetch("/journals/update", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    today_journal
+                }),
+            });
+            console.log("post complete")
+        }
+    }
 
     const navigate = useNavigate();
     const navigateWorkoutDetail = (myWorkout_id) => {
@@ -18,16 +55,29 @@ function HomeScreen() {
     }
 
     async function fetchData() {
-        const res = await fetch("/workouts/thisDate");
-        const data = await res.json();
-        setTodayWorkout(data)
+        const res_workout = await fetch("/workouts/thisDate");
+        const workout_data = await res_workout.json();
+        const res_journal = await fetch("/journals/thisDate")
+        const journal_data = await res_journal.json()
+        setTodayJournal(journal_data)
+        setTodayWorkout(workout_data)
+        console.log(journal_data)
         setLoading(false)
+        
+        if(journal_data.length > 0){
+            console.log("if")
+            setDefaultJournal(journal_data[0].content)
+        }else{
+            console.log("else")
+            setDefaultJournal("Schreibe hier deine Gedanken nieder.")
+        }
     }
+
+    
 
     useEffect(() => {
         fetchData();
     }, [])
-
     if (loading) return (
     <div>
         <div>Is Loading...</div>
@@ -69,9 +119,17 @@ function HomeScreen() {
             </div>
             <div>
                 <p className="center-content header2">Daily Journal</p>
-                <form>
-                    <textarea className="workout-list-tile p p-color" defaultValue={"Daily Journal"}></textarea>
-                </form>
+                
+                    <textarea className="workout-list-tile p p-color" defaultValue={default_journal}
+                    onChange ={(e) => updateJournalContent(e.target.value)}>
+
+                    </textarea>
+                    <p>
+                        <button className="center-content button-normal"
+                        onClick ={() => saveJournal()}>
+                            Eintrag Speichern</button>
+                    </p>
+                
             </div>
         </>
 

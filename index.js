@@ -9,9 +9,10 @@ const passport = require("passport")
 const LocalStrategy = require("passport-local").Strategy
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
+require("dotenv").config();
 
 // connecto to mongoDB
-mongoose.connect("mongodb://localhost:27017/Food");
+mongoose.connect(process.env.mongo_connection_string+"?authSource=admin");
 
 const staticPath = path.join(__dirname, 'build/client')
 
@@ -44,7 +45,7 @@ const sessionConfig = session({
     secret: "keyboard cat",
     saveUninitialized: true, // don't create session until something stored //don't save session if unmodified
     store: MongoStore.create({
-      mongoUrl:  "mongodb://localhost:27017/Food?authSource=admin",
+      mongoUrl:  process.env.mongo_connection_string+"?authSource=admin",
       collectionName: "user_sessions",
     }),
     cookie: {
@@ -134,6 +135,59 @@ server.post("/gerichte/deleteMahlzeit", async (req, res) => {
     }
 });
 
+//Journal DB
+const JournalSchema = new mongoose.Schema({
+    user_id: String,
+    content: String,
+    journal_date: Date
+})
+
+const JournalData = mongoose.model('Journals', JournalSchema);
+
+server.post("/journals/add", async (req, res) =>{
+    console.log("test", req.body);
+    var _id = new mongoose.Types.ObjectId();
+    var journal_date = new Date().toJSON()
+
+    JournalData.create({
+        content: req.body.content,
+        _id: _id,
+        journal_date: journal_date,
+        user_id: req.user.id||"invalid"
+    })
+
+})
+
+server.get("/journals/thisDate", async (req, res) => {
+    const date = new Date();
+
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    // Set the end of the day (23:59:59.999) for the given date
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const thisJournal = await JournalData.find({
+        "journal_date": {
+            $gte: startOfDay,
+            $lt: endOfDay
+        }, "user_id": req.user.id
+    });
+    res.send(thisJournal);
+});
+
+server.post("/journals/update", async (req, res) => {
+    
+    var testdata = req.body
+    console.log(testdata.today_journal[0]._id)
+    const filter = {"_id": testdata.today_journal[0]._id}   
+    await JournalData.findOneAndUpdate(filter, {$set: testdata.today_journal[0]})
+    let data = {}
+    data = await JournalData.findOne({"_id": testdata.today_journal[0]._id});
+
+    res.send(data)
+})
 
 //Exercise DB
 const SetSchema = new mongoose.Schema({

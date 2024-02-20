@@ -31,6 +31,11 @@ export default defineConfig({
       changeOrigin: true,
       secure: false,
       },
+      "/journals":{
+        target: "http://localhost:10000",
+      changeOrigin: true,
+      secure: false,
+      },
       "/auth": {
         target: "http://localhost:10000",
         changeOrigin: true,
