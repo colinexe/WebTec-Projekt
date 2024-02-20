@@ -19,8 +19,9 @@ function Navigation() {
                 buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
                 expires={150}
             >
-                Diese Website nutzt essenzielle Cookies, um eine einwandfreie Funktion der Website zu ermöglichen.{" "}
                 
+                Diese Website nutzt essenzielle Cookies, um eine einwandfreie Funktion der Website zu ermöglichen.{" "}
+
             </CookieConsent>
    
     <div>
