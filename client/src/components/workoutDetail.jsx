@@ -212,7 +212,7 @@ function workoutDetail(elem) {
         window.location.reload()
 
 
-        //sleep(1000).then(() => toggleModal(myObj.exercise[index].exercise_name))
+        sleep(100).then(() => toggleModal(myObj.exercise[index].exercise_name))
     }
 
     const exerciseToShow = localStorage.getItem('exerciseToShow');
@@ -223,7 +223,7 @@ function workoutDetail(elem) {
         const parsedExercise = JSON.parse(exerciseToShow);
         // Assuming 'exercise_id' is the actual ID of the modal you want to toggle
         //console.log(parsedExercise)
-        sleep(2000).then(() => toggleModal(parsedExercise._id))
+        sleep(100).then(() => toggleModal(parsedExercise._id))
     }
 
     useEffect(() => {
@@ -345,7 +345,7 @@ function workoutDetail(elem) {
                                                 <div className="flex justify-end mt-2 gap-1">
 
                                                     <button className="delete-button"
-                                                        onClick={() => { deleteExercise(myWorkout, ind), sleep(300).then(() => window.location.reload()) }}>
+                                                        onClick={() => { deleteExercise(myWorkout, ind), sleep(100).then(() => window.location.reload()) }}>
                                                         Delete
                                                     </button>
                                                     <button className="button-normal"

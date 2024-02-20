@@ -2,6 +2,7 @@ import CookieConsent from "react-cookie-consent";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import IconApp from "../assets/images/IconApp.png";
 import IconAppDesk from "../assets/images/IconAppDesk.png"
+import CookieBanner from "../assets/images/CookieBanner.png"
 
 function Navigation() {
     
@@ -11,6 +12,7 @@ function Navigation() {
     <>
     
     <div>
+        
         <CookieConsent
                 location="bottom"
                 buttonText="Verstanden!"
@@ -19,10 +21,10 @@ function Navigation() {
                 buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
                 expires={150}
             >
-                
+               <span><img src={CookieBanner} alt="Logo" className="only-desktop"/></span>
                 Diese Website nutzt essenzielle Cookies, um eine einwandfreie Funktion der Website zu ermöglichen.{" "}
 
-            </CookieConsent>
+        </CookieConsent>
    
     <div>
         <ul className="nav-bar">

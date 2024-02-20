@@ -231,6 +231,7 @@ server.post("/workouts/add", async (req, res) =>{
         workout_type: "Neues Workout",
         _id: _id,
         workout_date: workout_date,
+        duration: 60,
         user_id: req.user.id||"invalid"
     })
 
