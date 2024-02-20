@@ -33,5 +33,6 @@ jobs:
           npm install
           cd client
           npm install
+          npm run build
           cd ..
           export ENV=PROD&&pm2 start index.js --name ${{ env.PM2NAME }}-${{ env.APPLICATION_PORT }}
