@@ -328,8 +328,8 @@ function workoutDetail(elem) {
                                                 <div className="modal-line">
                                                     {/* Modal letztes Set das noch "leer" ist*/}
 
-
-                                                    <input size="3" type="number" className="leading-snug modal-line-tag ml-14" id={"newSetRepetitionField" + ind}
+                                                    
+                                                    <input size="3" type="number" className="leading-snug modal-line-tag ml-12" id={"newSetRepetitionField" + ind}
                                                         onChange={(e) => setNewSetRepetition(e.target.value)}>
                                                     </input>
                                                     <span className="modal-line-tag p p-color">&nbsp;X&nbsp;</span>
