@@ -306,7 +306,7 @@ function workoutDetail(elem) {
                                                 
                                                     <div key={index_of_set} id={el_of_set._id} className="modal-line">
                                                         
-                                                        <span className="modal-line-tag w-14 p p-color">Set {index_of_set + 1}:&nbsp;</span>
+                                                        <span className="max-w-14 modal-line-tag-wide  p p-color">Set {index_of_set + 1}:&nbsp;</span>
 
                                                         <input size="3" type="number" className="leading-snug modal-line-tag" value={el_of_set.set_repetition}
                                                             onChange={(e) => updateSetRepetition(e.target.value, ind, index_of_set)}></input>

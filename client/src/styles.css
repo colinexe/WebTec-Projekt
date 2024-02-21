@@ -157,6 +157,15 @@ body.active-modal {
 
 .modal-line-tag{
     line-height: 24px;
+    max-width: 48px;
+    display: inline-block;
+    justify-self: center;
+    vertical-align: middle;
+}
+
+.modal-line-tag-wide{
+    line-height: 24px;
+    width: 56px;
     max-width: 56px;
     display: inline-block;
     justify-self: center;

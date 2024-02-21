@@ -17,13 +17,21 @@ function Navigation() {
                 location="bottom"
                 buttonText="Verstanden!"
                 cookieName="myAwesomeCookieName2"
-                style={{ background: "#2B373B" }}
+                style={{
+                    background: "linear-gradient(to bottom, transparent , grey)",
+                    textShadow: "2px 2px black",
+                  }}
                 buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
                 expires={150}
+               
+                
             >
-               <span><img src={CookieBanner} alt="Logo" className="only-desktop"/></span>
-                Diese Website nutzt essenzielle Cookies, um eine einwandfreie Funktion der Website zu ermöglichen.{" "}
-
+            <div className=" flex content-end m-0">
+                <span className="pt-24">Diese Website nutzt essenzielle Cookies, um eine einwandfreie Funktion der Website zu ermöglichen.{}</span>
+                <div className="relative">
+                <img src={CookieBanner} alt="Logo" width="40%" height="40%" className="only-desktop"/>
+                </div>
+            </div>
         </CookieConsent>
    
     <div>
