@@ -63,10 +63,10 @@ body {
 }
 
 .top-margin{
-    height: 30px;
+    height: 10px;
 }
 .bottom-margin{
-    line-height: 140px;
+    height: 100px;
 }
 
 .button-normal {
@@ -508,7 +508,7 @@ body.active-modal {
     height: 44px;
 }
 .bottom-margin{
-    line-height: 80px;
+    height: 80px;
 }
 
 
