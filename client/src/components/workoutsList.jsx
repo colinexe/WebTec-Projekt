@@ -61,7 +61,7 @@ function workoutList() {
         )
     return (
         <>
-        <div className='h-11'></div>
+        <div className='top-margin'></div>
         <div>
         <Navigation />
         <div className="FAQ-visibility"><FaqContent />
@@ -99,7 +99,7 @@ function workoutList() {
 
                 })
             }
-            <div className="h-16"></div>
+            <div className="bottom-margin"></div>
         </>
 
     )

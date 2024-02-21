@@ -216,11 +216,12 @@ function gerichtForm() {
         )
     return (
         <>
-            <div className='h-11'></div>
+            <div className='top-margin'></div>
             <div>
                 <Navigation />
                 <div className="FAQ-visibility"><FaqContent /></div>
             </div>
+            <p className="header1 flex justify-center items-center">Gerichte</p>
             <div className="center-content">
                 <div className="rounded bg-gray-200 flex justify-center items-center h-full">
                     <div className="grid grid-cols-8 md:w-1/2 gap-2 w-full md:p-0 p-3">
@@ -312,6 +313,7 @@ function gerichtForm() {
                     ))
                 }
             </div>
+            <div className="bottom-margin"></div>
         </>
 
     )

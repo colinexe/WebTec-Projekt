@@ -178,7 +178,7 @@ server.get("/journals/thisDate", async (req, res) => {
 });
 
 server.post("/journals/update", async (req, res) => {
-    
+    console.log("test", req.body);
     var testdata = req.body
     console.log(testdata.today_journal[0]._id)
     const filter = {"_id": testdata.today_journal[0]._id}   

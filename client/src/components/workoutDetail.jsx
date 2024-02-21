@@ -241,7 +241,7 @@ function workoutDetail(elem) {
         )
     return (
         <>
-            <div className='h-11'></div>
+            <div className='top-margin'></div>
             
                 <Navigation />
                 <div className="FAQ-visibility"><FaqContent />
@@ -392,7 +392,7 @@ function workoutDetail(elem) {
                         <button className="delete-button  center-content"
                             onClick={() => { deleteWorkout(myWorkout), navigate(-1) }}>Delete Workout</button>
                   
-                 <div className='h-20'></div>     
+                  <div className="bottom-margin"></div> 
                     
 
 

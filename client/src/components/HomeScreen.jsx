@@ -15,9 +15,13 @@ function HomeScreen() {
 
     
     const updateJournalContent = (update) => {
-        const updatedJournalContent = today_journal
-        updatedJournalContent[0].content= update
-        setTodayJournal(updatedJournalContent)
+        if(today_journal.length === 0){
+            setContent(update)
+        }else{
+            const updatedJournalContent = today_journal
+            updatedJournalContent[0].content= update
+            setTodayJournal(updatedJournalContent)
+        }
     }
 
     const saveJournal = async (e) => {
@@ -90,7 +94,7 @@ function HomeScreen() {
     return (
         <>
             
-            <div className='h-11'></div>
+            <div className='top-margin'></div>
             <div>
                 <Navigation />
                 <div className="FAQ-visibility"><FaqContent />
@@ -122,7 +126,6 @@ function HomeScreen() {
                 
                     <textarea className="workout-list-tile p p-color" defaultValue={default_journal}
                     onChange ={(e) => updateJournalContent(e.target.value)}>
-
                     </textarea>
                     <p>
                         <button className="center-content button-normal"
@@ -131,6 +134,7 @@ function HomeScreen() {
                     </p>
                 
             </div>
+            <div className="bottom-margin"></div>
         </>
 
     )
