@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import React from 'react'
 import Navigation from "./Navigation";
 import FaqContent from "./faqContent.jsx";
+import ImpressumYac from "../assets/images/ImpressumYac.png"
 import { Link } from "react-router-dom";
 
 function Impressum() {
@@ -23,24 +24,58 @@ function Impressum() {
         <div>
             <div>Is Loading...</div>
             <div>
-            <Navigation />
-            <div className="FAQ-visibility"><FaqContent /></div>
+                <Navigation />
+                <div className="FAQ-visibility"><FaqContent /></div>
             </div>
         </div>
     )
     return (
         <>
-        <div className='top-margin'></div>
-        <div>
-        <Navigation />
-        <div className="FAQ-visibility"><FaqContent />
-        </div>
-        </div>
+            <div className='top-margin'></div>
+            <div>
+                <Navigation />
+                <div className="FAQ-visibility"><FaqContent />
+                </div>
+            </div>
             <p className="header1 flex justify-center items-center">Impressum</p>
             <p className="center-content p p-color">
-            Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <div className="p">Angaben gemäß § 5 TMG</div>
+                <div className="p">
+                    Max Muster
+                </div>
+                <div className="p">
+                    Musterweg
+                </div>
+                <div className="p">
+                    12345 Musterstadt
+                </div>
+                <div className="p">
+                    Vertreten durch:
+                    Max Muster
+                </div>
+                <div className="p">
+                    Kontakt:
+                </div>
+                <div className="p">
+                    Telefon: 01234-789456
+                </div>
+                <div className="p">
+                    E-Mail: max@muster.de
+                </div>
+                <div className="h-6">
+
+                </div>
+
+                <div className="p">
+                    Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.
+                    Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.
+                    Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.
+                </div>
             </p>
-      
+            <div className="flex justify-center">
+                <img src={ImpressumYac} alt="Logo" width="15%" height="15%" className="only-desktop"/>
+                <img src={ImpressumYac} alt="Logo" width="80%" height="80%" className="only-mobile"/>
+            </div>
             <div className="bottom-margin"></div>
         </>
     );

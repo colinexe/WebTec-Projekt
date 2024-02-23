@@ -324,10 +324,7 @@ body.active-modal {
 }
 
 .login-widget{
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
     line-height: 1.6;
     background: var(--modal);
     padding: 14px 28px;

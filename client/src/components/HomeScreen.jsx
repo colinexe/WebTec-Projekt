@@ -4,6 +4,7 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
 import FaqContent from "./faqContent";
+import HomeYac from "../assets/images/HomeYac.png";
 import { Link } from "react-router-dom";
 
 function HomeScreen() {
@@ -105,7 +106,14 @@ function HomeScreen() {
                 <p className="center-content header2">Today's Workouts</p>
                 {
                     today_workout.length === 0 ? (
-                        <p className="workout-list-tile text-center text-gray-400">Keine Daten gefunden</p>
+                    
+                        <p className="center-content text-center text-gray-400">
+                            <div className="flex justify-center">
+                                <img src={HomeYac} alt="Logo" width="40%" height="40%" className="only-desktop text-center"/>
+                                <img src={HomeYac} alt="Logo" width="80%" height="80%" className="only-mobile text-center"/>
+                            </div>
+                            
+                        </p>
                     ) : (
                         today_workout.map((el_of_workout, index) => (
                             <button key={index} className="workout-list-tile" onClick={() => navigateWorkoutDetail(el_of_workout._id)}>
