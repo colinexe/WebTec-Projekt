@@ -16,7 +16,7 @@ function Navigation() {
         <CookieConsent
                 location="bottom"
                 buttonText="Verstanden!"
-                cookieName="myAwesomeCookieName2"
+                cookieName="infocookie"
                 style={{
                     background: "linear-gradient(to bottom, transparent , grey)",
                     textShadow: "2px 2px black",
