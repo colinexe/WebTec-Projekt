@@ -42,26 +42,19 @@ function Impressum() {
             <p className="center-content p p-color">
                 <div className="p">Angaben gemäß § 5 TMG</div>
                 <div className="p">
-                    Max Muster
+                    Colin Geib
                 </div>
                 <div className="p">
-                    Musterweg
+                    Birkenstr. 15
                 </div>
                 <div className="p">
-                    12345 Musterstadt
+                    64569 Nauheim
                 </div>
                 <div className="p">
-                    Vertreten durch:
-                    Max Muster
+                    Telefon: 0151 72321487
                 </div>
                 <div className="p">
-                    Kontakt:
-                </div>
-                <div className="p">
-                    Telefon: 01234-789456
-                </div>
-                <div className="p">
-                    E-Mail: max@muster.de
+                    E-Mail: colin.geib.03@gmail.com
                 </div>
                 <div className="h-6">
 
