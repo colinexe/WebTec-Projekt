@@ -280,7 +280,7 @@ function workoutDetail(elem) {
                                             onClick={() => { toggleModal(el_of_exercise._id), console.log(el_of_exercise) }}>
                                             <div className="flex">
                                             <span class="material-icons button-color">edit</span>
-                                            <span className="p button-color">Edit</span></div>
+                                            <span className="p button-color">Bearbeiten</span></div>
                                         </button>
                                     </span>
                                 </div>
@@ -293,7 +293,7 @@ function workoutDetail(elem) {
                                             <div className="text-lg font-semibold">
 
 
-                                                <h2 className="header3">Edit Exercise</h2>
+                                                <h2 className="header3">Übung bearbeiten</h2>
                                             </div>
                                             <div>
                                                 <input type="text" defaultValue={el_of_exercise.exercise_name}
@@ -346,16 +346,16 @@ function workoutDetail(elem) {
 
                                                     <button className="delete-button"
                                                         onClick={() => { deleteExercise(myWorkout, ind), sleep(100).then(() => window.location.reload()) }}>
-                                                        Delete
+                                                        Löschen
                                                     </button>
                                                     <button className="button-normal"
                                                         onClick={() => { saveExerciseChanges(myWorkout), toggleModal(el_of_exercise._id) }}>
-                                                        Save
+                                                        Speichern
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <button className="close-modal" onClick={() => { toggleModal(el_of_exercise._id), window.location.reload() }}> X </button>
+                                            <button className="close-modal p-color" onClick={() => { toggleModal(el_of_exercise._id), window.location.reload() }}> X </button>
                                         </div>
                                     </div>
 
@@ -382,15 +382,15 @@ function workoutDetail(elem) {
 
 
 
-                    <button className="workout-list-tile text-center p p-color" onClick={() => { addExerciseFE("Neue Übung") }}>+ Exercise</button>
+                    <button className="workout-list-tile text-center p p-color" onClick={() => { addExerciseFE("Neue Übung") }}>+ Neue Übung</button>
 
 
                 </div>
                 
                         <button className="center-content button-normal"
-                            onClick={() => { saveExerciseChanges(myWorkout) }}>Save Workout</button>
+                            onClick={() => { saveExerciseChanges(myWorkout) }}>Workout speichern</button>
                         <button className="delete-button  center-content"
-                            onClick={() => { deleteWorkout(myWorkout), navigate(-1) }}>Delete Workout</button>
+                            onClick={() => { deleteWorkout(myWorkout), navigate(-1) }}>Workout löschen</button>
                   
                   <div className="bottom-margin"></div> 
                     

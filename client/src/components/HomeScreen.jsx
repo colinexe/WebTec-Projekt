@@ -103,17 +103,17 @@ function HomeScreen() {
             </div>
             <p className="header1 flex justify-center items-center">Heute</p>
             <div>
-                <p className="center-content header2">Today's Workouts</p>
+                <p className="center-content header2">Workout</p>
                 {
                     today_workout.length === 0 ? (
                     
-                        <p className="center-content text-center text-gray-400">
+                        <div className="center-content text-center text-gray-400">
                             <div className="flex justify-center">
                                 <img src={HomeYac} alt="Logo" width="40%" height="40%" className="only-desktop text-center"/>
                                 <img src={HomeYac} alt="Logo" width="80%" height="80%" className="only-mobile text-center"/>
                             </div>
                             
-                        </p>
+                        </div>
                     ) : (
                         today_workout.map((el_of_workout, index) => (
                             <button key={index} className="workout-list-tile" onClick={() => navigateWorkoutDetail(el_of_workout._id)}>
@@ -130,7 +130,7 @@ function HomeScreen() {
                 }
             </div>
             <div>
-                <p className="center-content header2">Daily Journal</p>
+                <p className="center-content header2">Tagebuch</p>
                 
                     <textarea className="workout-list-tile p p-color" defaultValue={default_journal}
                     onChange ={(e) => updateJournalContent(e.target.value)}>

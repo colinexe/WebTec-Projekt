@@ -71,7 +71,7 @@ function workoutList() {
 
             <button className="workout-list-tile text-center p p-color"
                 onClick={() => { addWorkout() }}>
-                + New Workout
+                + Neues Workout
             </button>
             {
                 workouts.map((el_of_workout, index) => {
@@ -87,7 +87,7 @@ function workoutList() {
                                 &nbsp;
                                 {String(el_of_workout.workout_date).substring(0, 10)}
                             </p>
-                            <p className="p p-color">Exercises: {el_of_workout.exercise.length}</p>
+                            <p className="p p-color">Übungen: {el_of_workout.exercise.length}</p>
                             <p className="p p-color">Dauer: {el_of_workout.duration} min</p>
                             <div>
                             </div>
