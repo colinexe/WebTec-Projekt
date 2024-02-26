@@ -298,7 +298,7 @@ body.active-modal {
     padding-bottom: 0.5rem;
     background-color: var(--tiles);
     display: none;
-    overflow: scroll;
+    overflow: hidden;
     border-radius: 1rem;
 }
 
@@ -467,7 +467,7 @@ body.active-modal {
     display: block;
     width: 95%;
     left: 2.5%;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 
@@ -477,7 +477,7 @@ body.active-modal {
 /* Style the accordion panel. Note: hidden by default */
 .panel {
     display: none;
-    overflow: scroll;
+    overflow: hidden;
 }
 /* List Display */
 
