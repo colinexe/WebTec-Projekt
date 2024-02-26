@@ -35,6 +35,7 @@ function Impressum() {
             <div>
                 <Navigation />
                 <div className="FAQ-visibility"><FaqContent />
+                
                 </div>
             </div>
             <p className="header1 flex justify-center items-center">Impressum</p>

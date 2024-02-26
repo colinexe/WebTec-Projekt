@@ -14,7 +14,7 @@ function faqContent() {
     };
 
     const menuItems = [
-        { title: "Warum sollte ich Yac-Fitness benutzen um mein Training zu tracken?", content: "Das Tracken deines Workouts ist entscheidend, um Fortschritt zu messen, Motivation aufrechtzuerhalten und effizienter zu trainieren. Es ermöglicht dir, deine Leistung zu optimieren und langfristig gesunde Trainingsgewohnheiten zu entwickeln." },
+        { title: "Warum sollte ich YAC Fitness benutzen um mein Training zu tracken?", content: "Das Tracken deines Workouts ist entscheidend, um Fortschritt zu messen, Motivation aufrechtzuerhalten und effizienter zu trainieren. Es ermöglicht dir, deine Leistung zu optimieren und langfristig gesunde Trainingsgewohnheiten zu entwickeln." },
         { title: "Was sollte ich als Anfänger trainieren?", content: "Als Anfänger sollte man eine balancierte Routine zu finden. Diese sollte Gewichtstraining und Cardio beinhalten. Dabei sollte man das Dehnen nicht vergessen, um Verletzungen zu vermeiden und die körperliche Flexibilität zu verbessern. Neben dem Fitness-Studio sind Aktivitäten wie Joggen, Schwimmen oder Fitness-Kurse eine gute Option." },
         { title: "Wie lange sollte ich trainieren?", content: "Die Länge der einzelnen Workouts hängt von deinem Fitness-Level ab. Generell sollte man sich mindestens 150 mins moderates oder 75 mins intensives Training pro Woche ansteuern. Diese Zeit kann man sich frei über die Woche verteilen." },
         {
@@ -40,8 +40,10 @@ function faqContent() {
                             <p>{item.content}</p>
                         </div>
                     </div>
+                    
                 ))}
             </div>
+            
         </>
     );
 }

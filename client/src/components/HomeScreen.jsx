@@ -109,7 +109,7 @@ function HomeScreen() {
                     
                         <div className="center-content text-center text-gray-400">
                             <div className="flex justify-center">
-                                <img src={HomeYac} alt="Logo" width="40%" height="40%" className="only-desktop text-center"/>
+                                <img src={HomeYac} alt="Logo" width="55%" height="55%" className="only-desktop text-center"/>
                                 <img src={HomeYac} alt="Logo" width="80%" height="80%" className="only-mobile text-center"/>
                             </div>
                             
