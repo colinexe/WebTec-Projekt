@@ -186,12 +186,9 @@ function HomeScreen() {
                 }
             </div>
             <div>
-                <p className="center-content header2">Daily Journal</p>
-                <form>
-                    <textarea className="workout-list-tile p p-color" defaultValue={"Daily Journal"}></textarea>
-                </form>
+                
 
-                <p className="center-content header2">Tagebuch</p>
+                <p className="center-content header2">Daily Journal</p>
                 
                     <textarea className="workout-list-tile p p-color" defaultValue={default_journal}
                     onChange ={(e) => updateJournalContent(e.target.value)}>
@@ -212,6 +209,11 @@ function HomeScreen() {
 export default HomeScreen
 
 /*
+<p className="center-content header2">Daily Journal</p>
+                <form>
+                    <textarea className="workout-list-tile p p-color" defaultValue={"Daily Journal"}></textarea>
+                </form>
+
     async function fetchData() {
         const res = await fetch("/gerichte/thisDateGerichte");
         const data = await res.json();

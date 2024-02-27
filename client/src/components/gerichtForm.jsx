@@ -218,7 +218,6 @@ function gerichtForm() {
             </div>
             <p className="header1 flex justify-center items-center">Gerichte</p>
             <div className="center-content">
-            <p className="header1 flex justify-center items-center">Gerichte</p>
                 <div className="roundedflex justify-center items-center h-full" style={{ backgroundColor: 'var(--tiles)', borderRadius: '10px'}}>
                     
                     <div className="grid grid-cols-9 gap-2 w-full md:p-0 p-3 ">
