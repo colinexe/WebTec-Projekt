@@ -252,7 +252,7 @@ function gerichtForm() {
                                     <div className="col-span-6" style={{ color: 'var(--text-white)' }} key={index}>
                                         {singleGericht.name} {singleGericht.calories} {singleGericht.fat} {singleGericht.protein} {singleGericht.carbs}
                                     </div>
-                                    <button onClick={() => { deleteGericht(index) }} className="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded col-span-2 justify-right">
+                                    <button onClick={() => { deleteGericht(index) }} className="delete-button text-black font-bold py-2 px-4 rounded col-span-2 justify-right">
                                         delete
                                     </button>
                                 </>
@@ -361,7 +361,7 @@ function gerichtForm() {
                             onClick={() => {
                             deleteMahlzeit(index, singleGericht._id);
                             }}
-                            className="justify-center delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded col-span-full"
+                            className="justify-center delete-button text-black font-bold py-2 px-4 rounded col-span-full"
                         >
                             delete
                         </button>
