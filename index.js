@@ -21,6 +21,7 @@ const GerichtSchema = new mongoose.Schema({
     calories: Number,
     fat: Number,
     protein: Number,
+    carbs: Number,
 });
 
 //Ingredient DB
@@ -132,6 +133,27 @@ server.post("/gerichte/deleteMahlzeit", async (req, res) => {
         console.error("Fehler beim Löschen der Mahlzeit:", error);
         res.status(500).send("Interner Serverfehler");
     }
+});
+
+server.get("/gerichte/thisDate", async (req, res) => {
+    const date = new Date();
+
+    // Set the start of the day (midnight) for the given date
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    // Set the end of the day (23:59:59.999) for the given date
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const thisDateGerichte = await GerichtsListeData.find({
+        "date": {
+            $gte: startOfDay,
+            $lt: endOfDay
+        }, "user_id": req.user.id
+    }).sort({ date: -1 });
+
+    res.send(thisDateGerichte);
 });
 
 
