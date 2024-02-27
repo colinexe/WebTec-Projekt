@@ -156,7 +156,7 @@ function HomeScreen() {
                                     &nbsp;
                                     {String(el_of_workout.workout_date).substring(0, 10)}
                                 </p>
-                                <p className="p p-color">Exercises: {el_of_workout.exercise.length}</p>
+                                <p className="p p-color">Übungen: {el_of_workout.exercise.length}</p>
                                 <p className="p p-color">Dauer: {el_of_workout.duration} min</p>
                             </button>
                         ))
@@ -165,7 +165,7 @@ function HomeScreen() {
             </div>
             <div>
 
-                <p className="center-content header2">Today's Meals</p>
+                <p className="center-content header2">Heutige Mahlzeiten</p>
                 {
                     today_meal.length === 0 ? (
                         <p className="workout-list-tile text-center text-gray-400">Keine Daten gefunden</p>
@@ -188,7 +188,7 @@ function HomeScreen() {
             <div>
                 
 
-                <p className="center-content header2">Daily Journal</p>
+                <p className="center-content header2">Tagebuch</p>
                 
                     <textarea className="workout-list-tile p p-color" defaultValue={default_journal}
                     onChange ={(e) => updateJournalContent(e.target.value)}>
