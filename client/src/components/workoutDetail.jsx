@@ -279,7 +279,7 @@ function workoutDetail(elem) {
                                         <button className=""
                                             onClick={() => { toggleModal(el_of_exercise._id), console.log(el_of_exercise) }}>
                                             <div className="flex">
-                                            <span class="material-icons button-color">edit</span>
+                                            <span className="material-icons button-color">edit</span>
                                             <span className="p button-color">Bearbeiten</span></div>
                                         </button>
                                     </span>

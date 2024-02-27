@@ -140,8 +140,21 @@ server.post("/gerichte/deleteMahlzeit", async (req, res) => {
 server.get("/gerichte/thisDate", async (req, res) => {
     const date = new Date();
 
-    // Set the start of the day (midnight) for the given date
-//Journal DB
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    // Set the end of the day (23:59:59.999) for the given date
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const thisGerichte = await GerichtsListeData.find({
+        "date": {
+            $gte: startOfDay,
+            $lt: endOfDay
+        }, "user_id": req.user.id
+    });
+    res.send(thisGerichte);
+});
 const JournalSchema = new mongoose.Schema({
     user_id: String,
     content: String,
@@ -174,16 +187,6 @@ server.get("/journals/thisDate", async (req, res) => {
     const endOfDay = new Date(date);
     endOfDay.setHours(23, 59, 59, 999);
 
-    const thisDateGerichte = await GerichtsListeData.find({
-        "date": {
-            $gte: startOfDay,
-            $lt: endOfDay
-        }, "user_id": req.user.id
-    }).sort({ date: -1 });
-
-    res.send(thisDateGerichte);
-});
-
     const thisJournal = await JournalData.find({
         "journal_date": {
             $gte: startOfDay,
@@ -192,6 +195,8 @@ server.get("/journals/thisDate", async (req, res) => {
     });
     res.send(thisJournal);
 });
+
+   
 
 server.post("/journals/update", async (req, res) => {
     console.log("test", req.body);
