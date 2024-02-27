@@ -62,6 +62,13 @@ body {
     display: none;
 }
 
+.top-margin{
+    height: 10px;
+}
+.bottom-margin{
+    height: 100px;
+}
+
 .button-normal {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
@@ -150,6 +157,16 @@ body.active-modal {
 
 .modal-line-tag{
     line-height: 24px;
+    max-width: 48px;
+    display: inline-block;
+    justify-self: center;
+    vertical-align: middle;
+}
+
+.modal-line-tag-wide{
+    line-height: 24px;
+    width: 56px;
+    max-width: 56px;
     display: inline-block;
     justify-self: center;
     vertical-align: middle;
@@ -307,10 +324,7 @@ body.active-modal {
 }
 
 .login-widget{
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
     line-height: 1.6;
     background: var(--modal);
     padding: 14px 28px;
@@ -444,6 +458,7 @@ body.active-modal {
 
 .accordion {
     cursor: pointer;
+    height: auto;
     padding: 18px;
     text-align: left;
     border: none;
@@ -452,6 +467,7 @@ body.active-modal {
     display: block;
     width: 95%;
     left: 2.5%;
+    overflow: hidden;
 }
 
 
@@ -497,7 +513,12 @@ body.active-modal {
     display: block;
 }
 
-
+.top-margin{
+    height: 44px;
+}
+.bottom-margin{
+    height: 80px;
+}
 
 
 

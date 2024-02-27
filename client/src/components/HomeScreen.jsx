@@ -4,12 +4,56 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
 import FaqContent from "./faqContent";
+import HomeYac from "../assets/images/HomeYac.png";
 import { Link } from "react-router-dom";
 
 function HomeScreen() {
     const [loading, setLoading] = useState(true)
     const [today_workout, setTodayWorkout] = useState()
+
     const [today_meal, setTodayMeal] = useState()
+
+    const [today_journal, setTodayJournal] = useState()
+    const [default_journal, setDefaultJournal] = useState()
+    const [content, setContent] = useState()
+
+    
+    const updateJournalContent = (update) => {
+        if(today_journal.length === 0){
+            setContent(update)
+        }else{
+            const updatedJournalContent = today_journal
+            updatedJournalContent[0].content= update
+            setTodayJournal(updatedJournalContent)
+        }
+    }
+
+    const saveJournal = async (e) => {
+        if(today_journal.length === 0){
+            const res = await fetch("/journals/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                content: content,
+            })  
+            }
+            );
+        }
+        else{
+            const res = await fetch("/journals/update", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    today_journal
+                }),
+            });
+            console.log("post complete")
+        }
+    }
 
     const navigate = useNavigate();
     const navigateWorkoutDetail = (myWorkout_id) => {
@@ -27,12 +71,29 @@ function HomeScreen() {
     async function fetchData() {
         const res_workout = await fetch("/workouts/thisDate");
         const workout_data = await res_workout.json();
+
         setTodayWorkout(workout_data)
         const res_gerichte = await fetch("/gerichte/thisDate");
         const gerichte_data = await res_gerichte.json();
         setTodayMeal(gerichte_data)
+
+        const res_journal = await fetch("/journals/thisDate")
+        const journal_data = await res_journal.json()
+        setTodayJournal(journal_data)
+        setTodayWorkout(workout_data)
+        console.log(journal_data)
+
         setLoading(false)
+        
+        if(journal_data.length > 0){
+            console.log("if")
+            setDefaultJournal(journal_data[0].content)
+        }else{
+            console.log("else")
+            setDefaultJournal("Schreibe hier deine Gedanken nieder.")
+        }
     }
+
 
     function sumMarkos(GerichtsListe){
         let kc = 0;
@@ -53,11 +114,9 @@ function HomeScreen() {
         );
     }
 
-
     useEffect(() => {
         fetchData();
     }, [])
-
     if (loading) return (
     <div>
         <div>Is Loading...</div>
@@ -70,7 +129,7 @@ function HomeScreen() {
     return (
         <>
             
-            <div className='h-11'></div>
+            <div className='top-margin'></div>
             <div>
                 <Navigation />
                 <div className="FAQ-visibility"><FaqContent />
@@ -78,10 +137,17 @@ function HomeScreen() {
             </div>
             <p className="header1 flex justify-center items-center">Heute</p>
             <div>
-                <p className="center-content header2">Today's Workouts</p>
+                <p className="center-content header2">Workout</p>
                 {
                     today_workout.length === 0 ? (
-                        <p className="workout-list-tile text-center text-gray-400">Keine Daten gefunden</p>
+                    
+                        <div className="center-content text-center text-gray-400">
+                            <div className="flex justify-center">
+                                <img src={HomeYac} alt="Logo" width="55%" height="55%" className="only-desktop text-center"/>
+                                <img src={HomeYac} alt="Logo" width="80%" height="80%" className="only-mobile text-center"/>
+                            </div>
+                            
+                        </div>
                     ) : (
                         today_workout.map((el_of_workout, index) => (
                             <button key={index} className="workout-list-tile" onClick={() => navigateWorkoutDetail(el_of_workout._id)}>
@@ -98,6 +164,7 @@ function HomeScreen() {
                 }
             </div>
             <div>
+
                 <p className="center-content header2">Today's Meals</p>
                 {
                     today_meal.length === 0 ? (
@@ -123,7 +190,21 @@ function HomeScreen() {
                 <form>
                     <textarea className="workout-list-tile p p-color" defaultValue={"Daily Journal"}></textarea>
                 </form>
+
+                <p className="center-content header2">Tagebuch</p>
+                
+                    <textarea className="workout-list-tile p p-color" defaultValue={default_journal}
+                    onChange ={(e) => updateJournalContent(e.target.value)}>
+                    </textarea>
+                    <p>
+                        <button className="center-content button-normal"
+                        onClick ={() => saveJournal()}>
+                            Eintrag Speichern</button>
+                    </p>
+                
+
             </div>
+            <div className="bottom-margin"></div>
         </>
 
     )

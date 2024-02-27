@@ -212,7 +212,7 @@ function workoutDetail(elem) {
         window.location.reload()
 
 
-        //sleep(1000).then(() => toggleModal(myObj.exercise[index].exercise_name))
+        sleep(100).then(() => toggleModal(myObj.exercise[index].exercise_name))
     }
 
     const exerciseToShow = localStorage.getItem('exerciseToShow');
@@ -223,7 +223,7 @@ function workoutDetail(elem) {
         const parsedExercise = JSON.parse(exerciseToShow);
         // Assuming 'exercise_id' is the actual ID of the modal you want to toggle
         //console.log(parsedExercise)
-        sleep(2000).then(() => toggleModal(parsedExercise._id))
+        sleep(100).then(() => toggleModal(parsedExercise._id))
     }
 
     useEffect(() => {
@@ -241,7 +241,7 @@ function workoutDetail(elem) {
         )
     return (
         <>
-            <div className='h-11'></div>
+            <div className='top-margin'></div>
             
                 <Navigation />
                 <div className="FAQ-visibility"><FaqContent />
@@ -280,7 +280,7 @@ function workoutDetail(elem) {
                                             onClick={() => { toggleModal(el_of_exercise._id), console.log(el_of_exercise) }}>
                                             <div className="flex">
                                             <span class="material-icons button-color">edit</span>
-                                            <span className="p button-color">Edit</span></div>
+                                            <span className="p button-color">Bearbeiten</span></div>
                                         </button>
                                     </span>
                                 </div>
@@ -293,7 +293,7 @@ function workoutDetail(elem) {
                                             <div className="text-lg font-semibold">
 
 
-                                                <h2 className="header3">Edit Exercise</h2>
+                                                <h2 className="header3">Übung bearbeiten</h2>
                                             </div>
                                             <div>
                                                 <input type="text" defaultValue={el_of_exercise.exercise_name}
@@ -306,7 +306,7 @@ function workoutDetail(elem) {
                                                 
                                                     <div key={index_of_set} id={el_of_set._id} className="modal-line">
                                                         
-                                                        <span className="modal-line-tag w-14 p p-color">Set {index_of_set + 1}:&nbsp;</span>
+                                                        <span className="max-w-14 modal-line-tag-wide  p p-color">Set {index_of_set + 1}:&nbsp;</span>
 
                                                         <input size="3" type="number" className="leading-snug modal-line-tag" value={el_of_set.set_repetition}
                                                             onChange={(e) => updateSetRepetition(e.target.value, ind, index_of_set)}></input>
@@ -328,7 +328,7 @@ function workoutDetail(elem) {
                                                 <div className="modal-line">
                                                     {/* Modal letztes Set das noch "leer" ist*/}
 
-
+                                                    
                                                     <input size="3" type="number" className="leading-snug modal-line-tag ml-14" id={"newSetRepetitionField" + ind}
                                                         onChange={(e) => setNewSetRepetition(e.target.value)}>
                                                     </input>
@@ -345,17 +345,17 @@ function workoutDetail(elem) {
                                                 <div className="flex justify-end mt-2 gap-1">
 
                                                     <button className="delete-button"
-                                                        onClick={() => { deleteExercise(myWorkout, ind), sleep(300).then(() => window.location.reload()) }}>
-                                                        Delete
+                                                        onClick={() => { deleteExercise(myWorkout, ind), sleep(100).then(() => window.location.reload()) }}>
+                                                        Löschen
                                                     </button>
                                                     <button className="button-normal"
                                                         onClick={() => { saveExerciseChanges(myWorkout), toggleModal(el_of_exercise._id) }}>
-                                                        Save
+                                                        Speichern
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <button className="close-modal" onClick={() => { toggleModal(el_of_exercise._id), window.location.reload() }}> X </button>
+                                            <button className="close-modal p-color" onClick={() => { toggleModal(el_of_exercise._id), window.location.reload() }}> X </button>
                                         </div>
                                     </div>
 
@@ -382,17 +382,17 @@ function workoutDetail(elem) {
 
 
 
-                    <button className="workout-list-tile text-center p p-color" onClick={() => { addExerciseFE("Neue Übung") }}>+ Exercise</button>
+                    <button className="workout-list-tile text-center p p-color" onClick={() => { addExerciseFE("Neue Übung") }}>+ Neue Übung</button>
 
 
                 </div>
                 
                         <button className="center-content button-normal"
-                            onClick={() => { saveExerciseChanges(myWorkout) }}>Save Workout</button>
+                            onClick={() => { saveExerciseChanges(myWorkout) }}>Workout speichern</button>
                         <button className="delete-button  center-content"
-                            onClick={() => { deleteWorkout(myWorkout), navigate(-1) }}>Delete Workout</button>
+                            onClick={() => { deleteWorkout(myWorkout), navigate(-1) }}>Workout löschen</button>
                   
-                 <div className='h-20'></div>     
+                  <div className="bottom-margin"></div> 
                     
 
 

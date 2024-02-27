@@ -10,13 +10,13 @@ function FAQ() {
 
     return (
         <>
-            <div className='h-11'></div>
+            <div className='top-margin'></div>
             
             <div><Navigation /></div>
             <h1 className="flex justify-center items-center header1">FAQ</h1>
             <div><FaqContent /></div>
       
-            
+            <div className="bottom-margin"></div>
         </>
     );
 }

@@ -211,11 +211,12 @@ function gerichtForm() {
         )
     return (
         <>
-            <div className='h-11'></div>
+            <div className='top-margin'></div>
             <div>
                 <Navigation />
                 <div className="FAQ-visibility"><FaqContent /></div>
             </div>
+            <p className="header1 flex justify-center items-center">Gerichte</p>
             <div className="center-content">
             <p className="header1 flex justify-center items-center">Gerichte</p>
                 <div className="roundedflex justify-center items-center h-full" style={{ backgroundColor: 'var(--tiles)', borderRadius: '10px'}}>
@@ -378,6 +379,7 @@ function gerichtForm() {
 
 
             </div>
+            <div className="bottom-margin"></div>
         </>
 
     )
