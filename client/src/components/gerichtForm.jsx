@@ -298,13 +298,13 @@ function gerichtForm() {
                         
                         <button disabled={buttonEnabled}
                             onClick={() => { addGericht(), clearFields() }}
-                            className="material-icons modal-line-tag rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="button-normal material-icons modal-line-tag rounded px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             +
                         </button>
                         <div className="col-span-4"></div>
                         <button onClick={addToDatabase}
-                            className="button-normal  rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="button-normal  rounded px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         style={{marginLeft: '10px', marginRight: '10px', marginBottom: '5px'}}
                         >
                             Add to DB
