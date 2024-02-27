@@ -523,3 +523,24 @@ body.active-modal {
 
 
 } 
+
+.caloriesAaron {
+    height: 50px;
+  }
+  
+  @media (max-width: 600px) {
+    .caloriesAaron {
+      height: 30px !important;
+    }
+  }
+
+.inputFieldAaron {
+    width: 150px;
+}
+
+@media (max-width: 600px) {
+    .inputFieldAaron{
+        width: 100px !important;
+        margin-right: 20px !important;
+    }
+}

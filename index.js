@@ -22,6 +22,7 @@ const GerichtSchema = new mongoose.Schema({
     calories: Number,
     fat: Number,
     protein: Number,
+    carbs: Number,
 });
 
 //Ingredient DB
@@ -135,6 +136,11 @@ server.post("/gerichte/deleteMahlzeit", async (req, res) => {
     }
 });
 
+
+server.get("/gerichte/thisDate", async (req, res) => {
+    const date = new Date();
+
+    // Set the start of the day (midnight) for the given date
 //Journal DB
 const JournalSchema = new mongoose.Schema({
     user_id: String,
@@ -168,6 +174,16 @@ server.get("/journals/thisDate", async (req, res) => {
     const endOfDay = new Date(date);
     endOfDay.setHours(23, 59, 59, 999);
 
+    const thisDateGerichte = await GerichtsListeData.find({
+        "date": {
+            $gte: startOfDay,
+            $lt: endOfDay
+        }, "user_id": req.user.id
+    }).sort({ date: -1 });
+
+    res.send(thisDateGerichte);
+});
+
     const thisJournal = await JournalData.find({
         "journal_date": {
             $gte: startOfDay,
@@ -188,6 +204,7 @@ server.post("/journals/update", async (req, res) => {
 
     res.send(data)
 })
+
 
 //Exercise DB
 const SetSchema = new mongoose.Schema({
