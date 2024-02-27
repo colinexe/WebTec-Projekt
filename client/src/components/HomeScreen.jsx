@@ -165,7 +165,7 @@ function HomeScreen() {
             </div>
             <div>
 
-                <p className="center-content header2">Heutige Mahlzeiten</p>
+                <p className="center-content header2">Mahlzeiten</p>
                 {
                     today_meal.length === 0 ? (
                         <p className="workout-list-tile text-center text-gray-400">Keine Daten gefunden</p>
